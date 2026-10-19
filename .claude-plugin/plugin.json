@@ -1,0 +1,13 @@
+{
+  "name": "quomerce",
+  "version": "0.1.0",
+  "description": "Ask Claude about your online shop: sessions, orders, funnel, errors, replays and uptime from Quomerce, explained in plain words.",
+  "author": {
+    "name": "Quomerce",
+    "url": "https://www.quomerce.com"
+  },
+  "homepage": "https://www.quomerce.com",
+  "repository": "https://github.com/quomerce/ai-plugin",
+  "license": "MIT",
+  "keywords": ["ecommerce", "analytics", "session-replay", "funnel", "conversion", "errors", "shopify", "idosell"]
+}
