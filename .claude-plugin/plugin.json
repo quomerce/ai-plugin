@@ -7,7 +7,17 @@
     "url": "https://www.quomerce.com"
   },
   "homepage": "https://www.quomerce.com",
+  "privacyPolicyUrl": "https://www.quomerce.com/privacy/",
   "repository": "https://github.com/quomerce/ai-plugin",
   "license": "MIT",
-  "keywords": ["ecommerce", "analytics", "session-replay", "funnel", "conversion", "errors", "shopify", "idosell"]
+  "keywords": [
+    "ecommerce",
+    "analytics",
+    "session-replay",
+    "funnel",
+    "conversion",
+    "errors",
+    "shopify",
+    "idosell"
+  ]
 }
