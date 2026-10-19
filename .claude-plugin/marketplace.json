@@ -1,0 +1,17 @@
+{
+  "name": "quomerce",
+  "owner": {
+    "name": "Quomerce",
+    "url": "https://www.quomerce.com"
+  },
+  "metadata": {
+    "description": "The Quomerce plugin: shop analytics from Quomerce in Claude."
+  },
+  "plugins": [
+    {
+      "name": "quomerce",
+      "source": "./",
+      "description": "Ask Claude about your online shop: sessions, orders, funnel, errors, replays and uptime from Quomerce."
+    }
+  ]
+}

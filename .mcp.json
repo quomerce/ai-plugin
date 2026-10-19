@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "quomerce": {
+      "type": "http",
+      "url": "https://api.quomerce.com/mcp"
+    }
+  }
+}
