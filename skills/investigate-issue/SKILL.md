@@ -18,7 +18,8 @@ Read the `quomerce-data` skill first.
    - the breakdowns (one browser, device or page type?),
    - the message and stack,
    - the sessions it hit.
-3. Pick one or two of those sessions and call `tracking_session` for each. Read what the visitor did
+3. Pick one or two of those sessions and call `tracking_session_story` for each (short text, with the
+   link to its recording; `tracking_session` only when you need the full technical detail). Read what the visitor did
    before and after the error: did they retry, leave, or still order?
 4. If a replay tool such as `show_session_replay` is available, show one replay of an affected session,
    so the person can watch it happen. If not, link the session page in the dashboard.
