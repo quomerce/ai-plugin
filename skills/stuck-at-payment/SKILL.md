@@ -13,7 +13,7 @@ buy, so each one is a sale the shop nearly made.
 ## Steps
 
 1. Find the website. Period: what the person said, else `7d`, with `compare: true`.
-2. `tracking_payment_retries`. If it says `available: false`, the shop does not report when a visitor
+2. `tracking_funnel`, and read its `stuck_at_payment`. If that says `available: false`, the shop does not report when a visitor
    goes to pay: say so and suggest the `setup-check` skill.
 3. Read: stuck visitors against last week, the share of visitors who went to pay, the value of their
    carts, how many came back to the shop, and the split by method, device and browser.
@@ -30,4 +30,4 @@ buy, so each one is a sale the shop nearly made.
 - The likely cause, marked as a guess unless the stories show it: a method that refuses, a bank page
   that fails on one browser, a return page that does not confirm the order.
 - One step to take, for example "make a test payment with BLIK on an iPhone", and the link to the
-  Funnel page, where they are shown under the funnel: `.../tracking/funnel`.
+  stuck-at-payment page, opened from the Funnel page: `.../tracking/funnel/payments`.

@@ -14,7 +14,7 @@ Read the `quomerce-data` skill first.
 3. Two periods of `n` days: before = the `n` days ending the day before the change, after = the `n`
    days from the change day. Both `custom` ranges.
 4. Call for each period: `tracking_overview`, `tracking_funnel`, and what the change was about (for a
-   payment change `tracking_payment_retries`, for a form `tracking_forms`, for speed `tracking_pages`,
+   payment change the funnel's `stuck_at_payment`, for a form `tracking_forms`, for speed `tracking_pages`,
    for a fix `tracking_issue` of that issue).
 5. `tracking_calendar` for both periods: a holiday, a payday window or Black Friday in one period
    and not the other can explain the difference by itself.

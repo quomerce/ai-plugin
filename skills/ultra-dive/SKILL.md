@@ -31,7 +31,7 @@ Call independent tools together. Budget: about 25 tool calls in total.
 | Context | `tracking_calendar` (same range, compare) | holidays, paydays, trading Sundays, shopping days in either week |
 | Funnel | `tracking_funnel` with `breakdown: "device"`, then `"source"` | the step whose conversion fell most, and in which segment |
 | Broken things | `tracking_issues` (`limit: 10`) | new or growing issues on cart, checkout or payment, with revenue impact |
-| Payment | `tracking_payment_retries` | visitors stuck at payment, by method, device and browser, against last week |
+| Payment | `stuck_at_payment` in the `tracking_funnel` result above | visitors stuck at payment, by method, device and browser, against last week |
 | Forms | `tracking_forms` | a checkout field with many errors or refills |
 | Speed | `tracking_pages` | a page type and device with poor LCP or INP and real traffic |
 | Uptime | `get_uptime` (`hours: 168`) | downtime or a certificate near expiry |
@@ -79,7 +79,7 @@ Keep it under about 350 words. Use this shape every week, so it can be compared:
 5. **Missing data**, one line, only if something is not sent.
 
 Links: `https://app.quomerce.com/app/a/<account_id>/websites/<website_id>/tracking/<page>`, where
-`<page>` is `overview`, `funnel`, `forms`, `issues/<fingerprint>`, `sessions/<session_id>`,
+`<page>` is `overview`, `funnel`, `funnel/payments`, `forms`, `issues/<fingerprint>`, `sessions/<session_id>`,
 `pages` or `heatmaps`. `tracking_session` and `tracking_session_story` return the session's own `url`.
 
 ## Running it every week

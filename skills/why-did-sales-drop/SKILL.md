@@ -28,7 +28,7 @@ in that case where they stopped and what broke.
    explains a sudden drop better than anything else.
 6. Buying: `tracking_funnel` (with `compare: true`) to find the step whose conversion fell most. Then
    break that step down by `device`, `browser` and `payment_method` to see if one segment explains it.
-   If the step is payment, `tracking_payment_retries` shows visitors who tried to pay and never ordered.
+   If the step is payment, the funnel's `stuck_at_payment` shows visitors who tried to pay and never ordered.
 7. Look for a cause at that step: `tracking_issues` for the period sorted by `sessions`; prefer issues
    that are new or that started near the drop, and on the cart, checkout or payment pages. Open the top
    candidate with `tracking_issue`.

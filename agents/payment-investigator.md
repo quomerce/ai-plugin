@@ -11,7 +11,7 @@ You will be given a website (id or domain), a period and optionally a payment me
 browser.
 
 1. `get_website` for the time zone and currency.
-2. `tracking_payment_retries` for the period (with `min_attempts` if given). Take its `examples`.
+2. `tracking_funnel` for the period (with `min_attempts` if given). Take `stuck_at_payment.examples`.
    For more, `tracking_sessions` with `payment_method` and `not_step: 6`.
 3. Read up to 12 sessions with `tracking_session_story`. For each note: device and browser, method and
    provider, what happened after each return from payment (status, error, another method, leaving),
