@@ -10,10 +10,16 @@ It works in Claude Code, in Cowork and in claude.ai chat.
 
 | Skill | Ask, for example |
 |---|---|
+| `ultra-dive` | "What should I do this week?" The weekly review: lost money, where to grow, conversion wins. |
 | `store-checkup` | "How did my shop do this week?" |
 | `why-did-sales-drop` | "Why were orders down yesterday?" |
 | `investigate-issue` | "What is this checkout error and who does it hit?" |
 | `checkout-funnel` | "Where do people leave checkout?" |
+| `stuck-at-payment` | "Why do people come back from BLIK without ordering?" |
+| `growth-segments` | "Which country or channel should I push?" |
+| `before-after` | "Did the new checkout help?" |
+| `session-stories` | "Show me what people do before they leave checkout." |
+| `quomerce-sql` | "Count orders by hour of the week." (needs Quomerce SQL on your account) |
 | `setup-check` | "Is Quomerce installed right? Why are there no orders?" |
 | `install-tracking` | "Add Quomerce to my Next.js shop." (Claude Code, in your shop's code) |
 
@@ -22,15 +28,23 @@ money in minor units, orders that are not reported, visits without consent.
 
 Each skill is also a slash command, for example `/quomerce:store-checkup`.
 
-The `issue-investigator` agent (Claude Code and Cowork) reads many sessions at once and reports what
-they have in common, so the main conversation stays short.
+Three agents (Claude Code and Cowork) do the heavy reading in their own context, so the main
+conversation stays short: `issue-investigator` and `payment-investigator` read many sessions and report
+what they share, `segment-scout` compares countries, devices and sources. In claude.ai chat the skills
+do the same work themselves.
+
+## The weekly review
+
+Run `/quomerce:ultra-dive your-shop.com` once a week. To have it run on its own, make it a scheduled task
+in Cowork, for example every Friday afternoon. The AI assistant page in the Quomerce dashboard has the
+command ready to copy.
 
 ## What it contains
 
 - **MCP server** `https://api.quomerce.com/mcp`. You sign in with your Quomerce account (OAuth) the first
   time Claude uses it. Claude sees only the shops your account is a member of, and can only read.
 - **Skills** in `skills/`.
-- **Agent** in `agents/`.
+- **Agents** in `agents/`.
 
 No hooks, no local programs, no API keys to paste.
 
