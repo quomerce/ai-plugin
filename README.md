@@ -10,13 +10,16 @@ It works in Claude Code, in Cowork and in claude.ai chat.
 
 | Skill | Ask, for example |
 |---|---|
-| `ultra-dive` | "What should I do this week?" The weekly review: lost money, where to grow, conversion wins. |
+| `ultra-dive` | "What should I do this week?" The weekly review: lost money, real traffic sources, competitors and prices, and a strategy with a test plan. |
 | `store-checkup` | "How did my shop do this week?" |
 | `why-did-sales-drop` | "Why were orders down yesterday?" |
 | `investigate-issue` | "What is this checkout error and who does it hit?" |
 | `checkout-funnel` | "Where do people leave checkout?" |
 | `stuck-at-payment` | "Why do people come back from BLIK without ordering?" |
-| `growth-segments` | "Which country or channel should I push?" |
+| `growth-segments` | "Which country or device should I push?" |
+| `traffic-sources` | "Where do my buyers really come from? Why is direct so big?" |
+| `market-research` | "Who are my competitors and am I cheaper?" (needs web search) |
+| `growth-strategy` | "Conversion, traffic or ads: what should I push, and which ads?" |
 | `before-after` | "Did the new checkout help?" |
 | `session-stories` | "Show me what people do before they leave checkout." |
 | `quomerce-sql` | "Count orders by hour of the week." (needs Quomerce SQL on your account) |
@@ -28,9 +31,10 @@ money in minor units, orders that are not reported, visits without consent.
 
 Each skill is also a slash command, for example `/quomerce:store-checkup`.
 
-Three agents (Claude Code and Cowork) do the heavy reading in their own context, so the main
+Four agents (Claude Code and Cowork) do the heavy reading in their own context, so the main
 conversation stays short: `issue-investigator` and `payment-investigator` read many sessions and report
-what they share, `segment-scout` compares countries, devices and sources. In claude.ai chat the skills
+what they share, `segment-scout` compares countries, devices and sources, and `market-researcher`
+searches the web for the shop's prices, competitors and social profiles. In claude.ai chat the skills
 do the same work themselves.
 
 ## The weekly review
@@ -45,6 +49,10 @@ command ready to copy.
   time Claude uses it. Claude sees only the shops your account is a member of, and can only read.
 - **Skills** in `skills/`.
 - **Agents** in `agents/`.
+
+The outside research (`market-research`, and that part of `ultra-dive`) uses Claude's own web search
+and page fetching. Turn web search on where your Claude app has a switch for it; without it, the review
+says it could not check the market.
 
 No hooks, no local programs, no API keys to paste.
 
