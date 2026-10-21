@@ -21,9 +21,9 @@ else `direct`. That hides a lot:
   Google is a Google visit. A Google visit that lands on the **home page** is almost always a search
   for the shop's name, not a generic search. Generic searches land on products or categories.
 - **Ad clicks are only visible when tagged.** A Google Ads click carries `gclid` (or `gbraid` /
-  `wbraid`), a Meta ad `fbclid`, a Microsoft ad `msclkid`, or the shop's own `utm_medium=cpc`. No such
+  `wbraid`), a Meta ad `fbclid`, a Microsoft ad `msclkid` or the shop's own `utm_medium=cpc`. No such
   visits means **no ads are running that send people here**, whatever the source column says.
-  TikTok's own `ttclid` is not kept, so TikTok ads show only with UTM tags.
+  TikTok ads show only with UTM tags for now.
 - **A visit back from a payment page** (tpay.com, przelewy24.pl, payu.com, paypal.com and the like) is
   a buyer returning from paying, not a source of new people.
 - **A visitor is one browser.** Quomerce cannot see one person moving from phone to computer. Never
@@ -43,7 +43,7 @@ SELECT multiIf(
     utm_source != '', concat('tagged: ', utm_source, if(utm_medium != '', concat(' / ', utm_medium), '')),
     match(referrer_domain, '(tiktok|facebook|instagram|youtube|threads|pinterest|linkedin|reddit|wykop)\\.')
       OR referrer_domain IN ('t.co', 'x.com', 'linktr.ee', 'l.messenger.com')
-      OR browser IN ('Facebook App', 'Instagram App') OR entry_url LIKE '%fbclid=%', 'social (seen)',
+      OR browser IN ('Facebook App', 'Instagram App', 'TikTok App') OR entry_url LIKE '%fbclid=%', 'social (seen)',
     match(referrer_domain, '(chatgpt|perplexity|claude|copilot|gemini)\\.'), 'AI assistants',
     match(referrer_domain, '(^|\\.)(google|bing|duckduckgo|yahoo|ecosia|yandex|brave)\\.'),
       if(entry_page_type = 'home', 'search, landed on home (shop name)', 'search, landed deeper'),
