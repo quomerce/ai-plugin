@@ -14,6 +14,8 @@ You will be given a website (id or domain) and a period.
    `conversion_by_source` and `new_vs_returning`, with the shop's time zone and the period. Otherwise
    `tracking_overview` with one filter at a time for the top devices, countries and sources, at most
    12 calls.
+   For sources, prefer the "real channels" query of the `traffic-sources` skill: plain `source`
+   counts most social traffic as `direct` or as a Google search for the shop's name.
 3. Leave out segments under 200 visits or 10 orders.
 4. "Grow here": conversion at least about 1.3x the average and under about 10 % of visits. "Fix here":
    over about 15 % of visits and conversion under about 0.7x the average; for each, `tracking_funnel`

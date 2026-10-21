@@ -23,6 +23,9 @@ Read the `quomerce-data` skill first.
      these, `tracking_funnel` filtered to the segment shows the step where it falls behind.
 5. Ignore segments under 200 sessions or 10 orders: say they are too small to tell.
 
+Traffic sources need more care than countries or devices: a lot of social traffic arrives as
+`direct` or as a Google search for the shop's name. For sources, follow `traffic-sources`.
+
 When the `segment-scout` agent is available, give it the shop and period and use its result.
 
 ## What to write
