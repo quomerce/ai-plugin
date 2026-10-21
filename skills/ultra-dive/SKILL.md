@@ -79,7 +79,7 @@ Keep it under about 350 words. Use this shape every week, so it can be compared:
 5. **Missing data**, one line, only if something is not sent.
 
 Links: `https://app.quomerce.com/app/a/<account_id>/websites/<website_id>/tracking/<page>`, where
-`<page>` is `overview`, `funnel`, `payments`, `forms`, `issues/<fingerprint>`, `sessions/<session_id>`,
+`<page>` is `overview`, `funnel`, `forms`, `issues/<fingerprint>`, `sessions/<session_id>`,
 `pages` or `heatmaps`. `tracking_session` and `tracking_session_story` return the session's own `url`.
 
 ## Running it every week

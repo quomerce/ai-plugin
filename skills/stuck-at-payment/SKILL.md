@@ -30,4 +30,4 @@ buy, so each one is a sale the shop nearly made.
 - The likely cause, marked as a guess unless the stories show it: a method that refuses, a bank page
   that fails on one browser, a return page that does not confirm the order.
 - One step to take, for example "make a test payment with BLIK on an iPhone", and the link to the
-  Payments page: `.../tracking/payments`.
+  Funnel page, where they are shown under the funnel: `.../tracking/funnel`.
