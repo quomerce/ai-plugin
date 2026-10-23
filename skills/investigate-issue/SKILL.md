@@ -10,9 +10,10 @@ Read the `quomerce-data` skill first.
 ## Steps
 
 1. Find the website. If the person gave an issue link, the fingerprint is the last part of
-   `/tracking/issues/<fingerprint>`. Otherwise call `tracking_issues` (range `7d` unless they said
-   otherwise, `sort: "sessions"`) and pick the issue they mean, or the top one if they asked "what is
-   broken?".
+   `/tracking/issues/<fingerprint>`. Otherwise call `tracking_issue_groups` (range `7d` unless they said
+   otherwise) and pick the problem they mean, or the top one if they asked "what is broken?". Each
+   group lists its fingerprints. A link ending in `issues/behaviour-<key>` is a behaviour, not an
+   error: use `tracking_behaviours` with that `key` instead.
 2. `tracking_issue` with that fingerprint and the same range. Read:
    - the trend (new? growing? since when?),
    - the breakdowns (one browser, device or page type?),

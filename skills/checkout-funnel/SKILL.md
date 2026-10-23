@@ -18,15 +18,21 @@ Read the `quomerce-data` skill first.
 4. `tracking_journeys` (default: from the landing page) shows at which step people leave and which
    pages they visit on the way. With `direction: "order"` it shows the steps before ordering. A detour
    to a shipping, returns or FAQ page before leaving often means missing information.
-5. `tracking_forms` for the checkout form: fields with high drop, error or refill rates are the ones
+   `tracking_next_steps` with `point: "cart"`, `"checkout"` or `"payment"` shows what sessions did
+   right after that stage: went back to products, opened a shipping page, paid, or nothing more.
+5. `tracking_behaviours`. A behaviour with `verdict: "converts_worse"` is a reason backed by data:
+   paying again and again, a page left at once, a long pause at a checkout field. Open it with `key`
+   for where it happens and sessions to read. Ignore the others (see `quomerce-data`).
+6. `tracking_forms` for the checkout form: fields with high drop, error or refill rates are the ones
    to fix. Never ask for or mention what visitors typed; Quomerce never records it.
-6. `tracking_issues` for the same range. Look at the issues seen on cart, checkout and payment pages;
+7. `tracking_issue_groups` for the same range, `section: "sales"`. Look at the issues seen on cart, checkout and payment pages;
    one that hits many sessions at the losing step may explain the drop (`investigate-issue`).
 
 ## What to write
 
 - The one step that loses the most orders, with numbers.
-- Why, as far as the data shows: a segment, a form field, a page people escape to, an error.
+- Why, as far as the data shows: a segment, a form field, a page people escape to, a behaviour, an
+  error.
 - Two or three changes to try, the cheapest first. Example: "Phone number is left empty by 31 % of
   visitors who leave at checkout. Make it optional or explain why you need it."
 - Link the funnel, journeys or forms page.

@@ -12,7 +12,7 @@ is already in the conversation, else run them:
   ads run now, how many visits buyers need.
 - `market-research`: prices against competitors, the shop's online presence, how competitors get
   customers.
-- The funnel and what is broken (`checkout-funnel`, `stuck-at-payment`, `tracking_issues`).
+- The funnel and what is broken (`checkout-funnel`, `stuck-at-payment`, `tracking_issue_groups`, `tracking_behaviours`).
 
 If the person told you something about the shop (in this chat, project instructions or memory, such
 as "our sales come from TikTok"), it counts as a fact; check it against the data and say if the data

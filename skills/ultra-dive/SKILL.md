@@ -33,7 +33,8 @@ Call independent tools together.
 | Overall | `tracking_overview` | revenue, orders, conversion, sessions against last week |
 | Context | `tracking_calendar` (same range, compare) | holidays, paydays, trading Sundays, shopping days in either week |
 | Funnel | `tracking_funnel` with `breakdown: "device"` | the step whose conversion fell most, and in which segment |
-| Broken things | `tracking_issues` (`limit: 10`) | new or growing issues on cart, checkout or payment, with revenue impact |
+| Broken things | `tracking_issue_groups` (`limit: 10`) | new, regressed or escalating problems on cart, checkout or payment, with revenue impact |
+| Behaviour | `tracking_behaviours` | a behaviour with `verdict: "converts_worse"`; open it with `key` for where and which sessions |
 | Payment | `stuck_at_payment` in the `tracking_funnel` result above | visitors stuck at payment, by method, device and browser, against last week |
 | Forms | `tracking_forms` | a checkout field with many errors or refills |
 | Speed | `tracking_pages` | a page type and device with poor LCP or INP and real traffic |
