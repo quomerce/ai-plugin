@@ -13,7 +13,9 @@ Read the `quomerce-data` skill first. It explains ranges, money and orders.
 2. Pick the period: what the person asked, else `7d`. Always pass `compare: true`.
 3. Call these (they are independent, so call them together):
    - `tracking_overview` for sessions, orders, revenue, conversion, the funnel and top issues;
-   - `tracking_issues` with the same range, `limit: 10`, for what is failing most;
+   - `tracking_issue_groups` with the same range, `limit: 10`, for what is failing most;
+   - `tracking_behaviours` with the same range, for shopper behaviour that goes with fewer orders
+     (only `converts_worse` counts);
    - `get_uptime` with `hours` matching the period (at most 168) for downtime and certificate problems.
 4. Only if something stands out, look one level deeper:
    - conversion or orders moved more than about 15 %: `tracking_funnel` with `breakdown: "device"` to see
