@@ -15,8 +15,12 @@ Read the `quomerce-data` skill first.
 3. Each segment against it. Either:
    - SQL (when the `sql_*` tools exist): the `conversion_by_country_device`, `conversion_by_source`
      and `new_vs_returning` recipes from `sql_schema`; or
-   - tools: `tracking_overview` with one filter at a time (`device`, then the top `country` and
-     `source` values), and `tracking_funnel` with `breakdown: "country"` and `"source"`.
+   - tools: `tracking_overview` with one filter at a time (`device`, then the top `country` values,
+     then `visitor_kind: "new"` and `"returning"`), and `tracking_funnel` with
+     `breakdown: "country"`.
+   For channels and campaigns, `tracking_traffic_sources` gives every one in a single call, with
+   conversion and revenue per row. For landing pages, `tracking_entry_pages` does the same (see
+   `landing-pages`).
 4. Sort the segments into:
    - **grow here:** conversion at least about 1.3x the average, traffic under about 10 % of sessions;
    - **fix here:** traffic over about 15 % of sessions, conversion under about 0.7x the average. For

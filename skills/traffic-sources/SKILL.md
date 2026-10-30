@@ -7,13 +7,30 @@ description: Work out where a shop's visitors and buyers really come from in Quo
 
 Read the `quomerce-data` and `quomerce-sql` skills first. The queries below are written for Quomerce
 SQL. Replace `Europe/Warsaw` with the shop's time zone from `get_website`. Without the `sql_*` tools,
-use `tracking_overview` with one `source` at a time and `tracking_funnel` with `breakdown: "source"`,
-and say the hidden traffic could not be checked.
+use only the first step and say the hidden traffic could not be checked. For one campaign, use
+`campaign-check`.
 
-## Why the plain "source" is not enough
+## First: what Quomerce already classifies
 
-The source Quomerce shows is the campaign tag (`utm_source`), else the site that sent the visitor,
-else `direct`. That hides a lot:
+`tracking_traffic_sources` for the period. It sorts sessions into `channels` (`paid_search`,
+`organic_search`, `paid_social`, `social`, `email`, `referral`, `other_paid`, `direct`,
+`unrecognized`, `not_collected`) and `rows` by source / medium with their campaigns, each with
+sessions, orders, conversion and revenue. Its trust order is the UTM tag, then the ad-click id, then
+the referring site. Read `coverage` before any share:
+
+- `coverage.orders.without_session`: orders with no visible session (no consent, or a payment page
+  that never sent the shopper back). They are in no channel. If they are a large part of
+  `coverage.orders.total`, every channel's share of orders is a share of the visible part only.
+- `coverage.not_collected`: sessions whose landing page was never read. Unknown, not direct.
+- `coverage.conflicts`: the UTM tag and the click id or referrer disagreed. See `campaign-check`.
+
+For one channel or source, `tracking_traffic_source_detail` gives its landing pages, campaigns, the
+issues its visitors hit and sessions to open. Then use the queries below for what the classification
+cannot see.
+
+## Why the channel is not the whole story
+
+Even with UTM tags, click ids and referrers read, a lot stays hidden:
 
 - **Apps hide where they come from.** A link opened from TikTok, Instagram, Messenger, WhatsApp or an
   e-mail app often arrives with no referrer, so it is counted as `direct`.
