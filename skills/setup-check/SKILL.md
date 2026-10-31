@@ -28,6 +28,11 @@ Read the `quomerce-data` skill first.
      its code.
    - `sdk_versions`: very old versions on many sessions mean a cached or hard-coded old script.
    - `health.bot_share_7d` very high: most traffic is automated.
+   - Attribution, from `tracking_traffic_sources` (last 7 days): a large `coverage.not_collected`
+     means sessions whose landing page was never read, often an old cached script or a pixel-only
+     install; a large `coverage.conflicts` means links whose UTM tags contradict the ad click (see
+     `campaign-check`); `coverage.orders.without_session` close to `total` means orders arrive but
+     their visits do not, usually missing consent.
 4. Give the fix for the shop's platform:
    - **Shopify**: the Quomerce app's theme embed must be turned on in the theme editor (App embeds),
      and its web pixel sends the checkout steps and the order.

@@ -18,6 +18,12 @@ It works in Claude Code, in Cowork and in claude.ai chat.
 | `stuck-at-payment` | "Why do people come back from BLIK without ordering?" |
 | `growth-segments` | "Which country or device should I push?" |
 | `traffic-sources` | "Where do my buyers really come from? Why is direct so big?" |
+| `campaign-check` | "Is my Black Friday campaign working? Are my UTM tags right?" |
+| `landing-pages` | "Which landing pages waste my ad traffic? Where should my ads point?" |
+| `what-next` | "What do people do after adding to cart? Where do they go from checkout?" |
+| `page-ux` | "Does anyone click this banner? How far do people scroll on product pages?" |
+| `site-speed` | "Is my shop slow? Does speed cost me sales?" |
+| `issue-triage` | "What is broken and what should my developer fix first?" |
 | `market-research` | "Who are my competitors and am I cheaper?" (needs web search) |
 | `growth-strategy` | "Conversion, traffic or ads: what should I push, and which ads?" |
 | `before-after` | "Did the new checkout help?" |
@@ -31,10 +37,11 @@ money in minor units, orders that are not reported, visits without consent.
 
 Each skill is also a slash command, for example `/quomerce:store-checkup`.
 
-Four agents (Claude Code and Cowork) do the heavy reading in their own context, so the main
+Five agents (Claude Code and Cowork) do the heavy reading in their own context, so the main
 conversation stays short: `issue-investigator` and `payment-investigator` read many sessions and report
-what they share, `segment-scout` compares countries, devices and sources, and `market-researcher`
-searches the web for the shop's prices, competitors and social profiles. In claude.ai chat the skills
+what they share, `segment-scout` compares countries, devices and sources, `landing-scout` reads the
+weakest landing pages with their heatmaps and sessions, and `market-researcher` searches the web for
+the shop's prices, competitors and social profiles. In claude.ai chat the skills
 do the same work themselves.
 
 ## The weekly review

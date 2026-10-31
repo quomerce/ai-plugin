@@ -37,7 +37,8 @@ Call independent tools together.
 | Behaviour | `tracking_behaviours` | a behaviour with `verdict: "converts_worse"`; open it with `key` for where and which sessions |
 | Payment | `stuck_at_payment` in the `tracking_funnel` result above | visitors stuck at payment, by method, device and browser, against last week |
 | Forms | `tracking_forms` | a checkout field with many errors or refills |
-| Speed | `tracking_pages` | a page type and device with poor LCP or INP and real traffic |
+| Landing pages | `tracking_entry_pages` | a busy row with `converts_worse`, or a path whose cart rate fell against last week (`landing-pages`) |
+| Speed | `tracking_pages` | a page type and device with poor LCP or INP and real traffic (`site-speed`) |
 | Uptime | `get_uptime` (`hours: 168`) | downtime or a certificate near expiry |
 
 ## 2. Where visitors and buyers come from

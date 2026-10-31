@@ -27,8 +27,17 @@ the dashboard at https://app.quomerce.com shows.
 - At most 92 days. For a longer question, say so and use the last 92 days or ask.
 - `compare: true` adds the equally long period just before. Use it for every "is this better or
   worse" question instead of making two calls.
-- Filters on the same call: `device`, `browser`, `os`, `country` (two letters, `PL`), `source`
-  (campaign source, referring domain or `direct`), `payment_method`.
+- Filters on the same call: `device`, `browser`, `os`, `country` (two letters, `PL`), `payment_method`,
+  and:
+  - where visits came from: `channel` (`paid_search`, `organic_search`, `paid_social`, `social`,
+    `email`, `referral`, `other_paid`, `direct`, `unrecognized`, `not_collected`), `source`
+    (`google`, `facebook`, `newsletter`, `direct`…), `medium`, `campaign` (ignores case);
+  - `entry_page_type`: the page type they landed on (`home`, `category`, `product`, `search`…);
+  - `visitor_kind`: `new` or `returning`. Returning is a floor: a second device or a cleared cookie
+    reads as new, and Safari keeps the cookie about a week;
+  - `host` (one domain of a shop with several) and `segment` (one store of the shop, as
+    `get_website` lists them).
+- `not_collected` is not direct: the landing page was never read, so the source is unknown.
 - "Today" is not finished. Do not compare a part of today with a full day without saying so.
 
 ## Money and orders
@@ -92,7 +101,7 @@ from a list and left within seconds), `tax_id_entered` (a company buyer), `check
 
 - How the shop is doing: `tracking_overview` (with `compare: true`).
 - What is broken and what it costs: `tracking_issue_groups`, then `tracking_issue` for one of its
-  fingerprints.
+  fingerprints. What to fix first: `issue-triage`.
 - What shoppers did that goes with fewer orders: `tracking_behaviours`, then with `key`.
 - Where buyers get stuck: `tracking_funnel` (its `stuck_at_payment` is visitors who go to pay again
   and again and never order), `tracking_next_steps` (what sessions did right after the cart,
@@ -102,8 +111,15 @@ from a list and left within seconds), `tax_id_entered` (a company buyer), `check
   payouts, shopping days; Polish shops only for now). A payday is a possible reason, not proof.
 - What visitors did: `tracking_sessions`, then `tracking_session_story` (the session as short text,
   with a link to its recording). Prefer it to `tracking_session`, which is long.
-- Where visitors and buyers really come from (hidden social traffic, ad clicks): `traffic-sources`.
-  The `source` filter alone is the campaign tag, else the referring site, else `direct`.
+- Where visitors and buyers come from: `tracking_traffic_sources` (channels, source / medium,
+  campaigns, and `coverage`: orders that could be tied to a session), then
+  `tracking_traffic_source_detail` for one of them. Hidden social traffic and bursts:
+  `traffic-sources`. One campaign or channel: `campaign-check`.
+- Where visitors land and what they do next: `tracking_entry_pages` (see `landing-pages`).
+- What visitors do right after a stage: `tracking_next_steps` (see `what-next`).
+- How one page is used (clicks, scroll, revenue per element): `tracking_heatmap` (see `page-ux`).
+- Speed on real visits (Core Web Vitals per page type, path and device): `tracking_pages` (see
+  `site-speed`).
 - Competitors, market prices, the shop's social profiles: `market-research` (web, not Quomerce).
 - What to push to sell more: `growth-strategy`.
 - Anything else: Quomerce SQL, see the `quomerce-sql` skill.
@@ -117,7 +133,7 @@ from a list and left within seconds), `tax_id_entered` (a company buyer), `check
 - Link to the matching dashboard page when it helps:
   `https://app.quomerce.com/app/a/<account_id>/websites/<website_id>/tracking/<page>`, where `<page>` is
   `overview`, `funnel`, `funnel/payments`, `journeys`, `forms`, `sessions`, `sessions/<session_id>`, `issues`,
-  `issues/<fingerprint>`, `issues/behaviour-<key>`,
-  `pages`, `heatmaps` or `setup`.
+  `issues/<fingerprint>`, `issues/behaviour-<key>`, `sources`, `sources/entry`,
+  `pages`, `heatmaps` (`heatmaps?path=<path>` for one page) or `setup`.
 - You cannot change settings. For changes, send the person to the dashboard.
 - Never guess a number the tools did not return. If a tool fails, say what you could not read.
