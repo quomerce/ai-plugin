@@ -1,6 +1,6 @@
 ---
 name: store-checkup
-description: A quick health check of an online shop from Quomerce data, with the 3 to 5 things that matter most. Use when someone asks how their shop or store is doing, for a weekly or daily summary, a status report, "anything I should know?", or "how was yesterday/this week/this month?".
+description: A quick health check of an online shop from Quomerce data, with the 3 to 5 things that matter most. Use when someone asks how their shop or store is doing, for a short daily or weekly summary, a status report, "anything I should know?", or "how was yesterday/this week/this month?". For the full weekly review with traffic, market and strategy, use ultra-dive.
 ---
 
 # Store checkup

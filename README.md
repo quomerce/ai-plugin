@@ -14,20 +14,17 @@ It works in Claude Code, in Cowork and in claude.ai chat.
 | `store-checkup` | "How did my shop do this week?" |
 | `why-did-sales-drop` | "Why were orders down yesterday?" |
 | `investigate-issue` | "What is this checkout error and who does it hit?" |
-| `checkout-funnel` | "Where do people leave checkout?" |
+| `checkout-funnel` | "Where do people leave checkout? What do they do after adding to cart?" |
 | `stuck-at-payment` | "Why do people come back from BLIK without ordering?" |
-| `growth-segments` | "Which country or device should I push?" |
 | `traffic-sources` | "Where do my buyers really come from? Why is direct so big?" |
 | `campaign-check` | "Is my Black Friday campaign working? Are my UTM tags right?" |
 | `landing-pages` | "Which landing pages waste my ad traffic? Where should my ads point?" |
-| `what-next` | "What do people do after adding to cart? Where do they go from checkout?" |
 | `page-ux` | "Does anyone click this banner? How far do people scroll on product pages?" |
 | `site-speed` | "Is my shop slow? Does speed cost me sales?" |
 | `issue-triage` | "What is broken and what should my developer fix first?" |
 | `market-research` | "Who are my competitors and am I cheaper?" (needs web search) |
-| `growth-strategy` | "Conversion, traffic or ads: what should I push, and which ads?" |
+| `growth-strategy` | "Conversion, traffic or ads: what should I push? Which country or device?" |
 | `before-after` | "Did the new checkout help?" |
-| `session-stories` | "Show me what people do before they leave checkout." |
 | `quomerce-sql` | "Count orders by hour of the week." (needs Quomerce SQL on your account) |
 | `setup-check` | "Is Quomerce installed right? Why are there no orders?" |
 | `install-tracking` | "Add Quomerce to my Next.js shop." (Claude Code, in your shop's code) |

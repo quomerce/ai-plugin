@@ -110,13 +110,16 @@ from a list and left within seconds), `tax_id_entered` (a company buyer), `check
 - Why a day was busy or quiet: `tracking_calendar` (holidays, trading Sundays, paydays, pension
   payouts, shopping days; Polish shops only for now). A payday is a possible reason, not proof.
 - What visitors did: `tracking_sessions`, then `tracking_session_story` (the session as short text,
-  with a link to its recording). Prefer it to `tracking_session`, which is long.
+  with a link to its recording). Prefer it to `tracking_session`, which is long. Build the group with
+  filters (`reached_step: 3, not_step: 6` = started checkout, no order; `has_errors`,
+  `has_frustration`, `entry_path`, `device`…), read up to 5 sessions spread over the period, and say
+  what they share as "3 of 5". For more, hand them to the `issue-investigator` or
+  `payment-investigator` agent. Never write personal data about a visitor.
 - Where visitors and buyers come from: `tracking_traffic_sources` (channels, source / medium,
   campaigns, and `coverage`: orders that could be tied to a session), then
   `tracking_traffic_source_detail` for one of them. Hidden social traffic and bursts:
   `traffic-sources`. One campaign or channel: `campaign-check`.
 - Where visitors land and what they do next: `tracking_entry_pages` (see `landing-pages`).
-- What visitors do right after a stage: `tracking_next_steps` (see `what-next`).
 - How one page is used (clicks, scroll, revenue per element): `tracking_heatmap` (see `page-ux`).
 - Speed on real visits (Core Web Vitals per page type, path and device): `tracking_pages` (see
   `site-speed`).

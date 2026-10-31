@@ -1,6 +1,6 @@
 ---
 name: growth-strategy
-description: Decide what a shop should push to sell more - fixing conversion, bringing back visitors who did not buy, or getting more new visitors - and which channel (Google Search or Shopping, YouTube, TikTok, Meta, e-mail, own content), with reasons from Quomerce data and the market, and a small test plan. Use when someone asks how to sell more, whether to focus on conversion or traffic, which ads to try, where to spend a marketing budget, or as the strategy part of the weekly review.
+description: Decide what a shop should push to sell more - fixing conversion, bringing back visitors who did not buy, or getting more new visitors - and which channel (Google Search or Shopping, YouTube, TikTok, Meta, e-mail, own content), with reasons from Quomerce data and the market, and a small test plan. Use when someone asks how to sell more, whether to focus on conversion or traffic, which ads to try, where to spend a marketing budget, which country, device or visitor group to push, how mobile compares with desktop, or as the strategy part of the weekly review.
 ---
 
 # What to push to sell more
@@ -13,6 +13,13 @@ is already in the conversation, else run them:
 - `market-research`: prices against competitors, the shop's online presence, how competitors get
   customers.
 - The funnel and what is broken (`checkout-funnel`, `stuck-at-payment`, `tracking_issue_groups`, `tracking_behaviours`).
+- Segments against the shop's average: countries, devices, new vs returning (`visitor_kind`),
+  channels (`tracking_traffic_sources`) and landing pages (`landing-pages`). Hand it to the
+  `segment-scout` agent when it is available; otherwise `tracking_overview` with one filter at a time,
+  or the `conversion_by_country_device` and `new_vs_returning` recipes from `sql_schema`. **Grow
+  here:** conversion at least about 1.3x the average on under about 10 % of visits. **Fix here:** over
+  about 15 % of visits converting under about 0.7x the average; `tracking_funnel` filtered to it names
+  the step where it falls behind. Skip segments under 200 visits or 10 orders.
 
 If the person told you something about the shop (in this chat, project instructions or memory, such
 as "our sales come from TikTok"), it counts as a fact; check it against the data and say if the data
