@@ -15,7 +15,10 @@ Read the `quomerce-data` skill first.
    `tracking_heatmap` without `path` and pick from `pages` (the busiest paths). For a page type rather
    than one path, take its busiest path from `tracking_pages` or `tracking_entry_pages`.
 3. `tracking_heatmap` with `path` and `device: "mobile"`, then the same with `device: "desktop"`. Most
-   shops get most visits on phones, and the two layouts are different pages.
+   shops get most visits on phones, and the two layouts are different pages. Add `image: true` to
+   see the page itself: it comes back as up to 4 pictures, top to bottom, with the clicks painted on
+   (blue few, red most) and dashed lines where 75, 50 and 25 % of views stopped. It is drawn on one
+   recorded visit, so a banner or a pop-up that visitor had may cover part of it.
 4. Read:
    - `zones`: per element, `clicks`, `click_rate` (share of page views with a click on it) and `text`.
      The top 5 to 10 zones say what the page is used for. `hidden_zones` were clicked too rarely to

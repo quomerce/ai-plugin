@@ -22,8 +22,10 @@ Read the `quomerce-data` skill first.
 3. Pick one or two of those sessions and call `tracking_session_story` for each (short text, with the
    link to its recording; `tracking_session` only when you need the full technical detail). Read what the visitor did
    before and after the error: did they retry, leave, or still order?
-4. If a replay tool such as `show_session_replay` is available, show one replay of an affected session,
-   so the person can watch it happen. If not, link the session page in the dashboard.
+4. To see the error as the visitor saw it, call `tracking_session_screenshots` for one affected session
+   with `at` set to the error's time (from the story or `tracking_session`). If a replay tool such as
+   `show_session_replay` is available, show one replay too, so the person can watch it happen. If
+   not, link the session page in the dashboard.
 5. If the person wants to look across many sessions ("what do these 40 have in common?"), hand that to
    the `issue-investigator` agent when it is available.
 
