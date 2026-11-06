@@ -111,6 +111,10 @@ from a list and left within seconds), `tax_id_entered` (a company buyer), `check
   payouts, shopping days; Polish shops only for now). A payday is a possible reason, not proof.
 - What visitors did: `tracking_sessions`, then `tracking_session_story` (the session as short text,
   with a link to its recording). Prefer it to `tracking_session`, which is long.
+- What visitors saw: `tracking_session_screenshots` (pictures of a session's key moments, drawn from
+  its recording) and `tracking_heatmap` with `image: true` (the page with its clicks). You see these
+  pictures yourself; `show_session_replay` and `show_heatmap` only show the person a player. Each
+  picture costs about 1,500 tokens: ask for them when the text leaves a question open.
 - Where visitors and buyers come from: `tracking_traffic_sources` (channels, source / medium,
   campaigns, and `coverage`: orders that could be tied to a session), then
   `tracking_traffic_source_detail` for one of them. Hidden social traffic and bursts:

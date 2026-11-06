@@ -27,6 +27,10 @@ Read the `quomerce-data` skill first.
    to fix. Never ask for or mention what visitors typed; Quomerce never records it.
 7. `tracking_issue_groups` for the same range, `section: "sales"`. Look at the issues seen on cart, checkout and payment pages;
    one that hits many sessions at the losing step may explain the drop (`investigate-issue`).
+8. To see the losing step as shoppers saw it, read two sessions that left there
+   (`tracking_session_story`), then `tracking_session_screenshots` for the clearest one, and
+   `tracking_heatmap` with `image: true` for the cart or checkout path. Say only what the pictures
+   show.
 
 ## What to write
 
