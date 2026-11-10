@@ -54,11 +54,12 @@ command ready to copy.
 
 - **MCP server** `https://api.quomerce.com/mcp`. You sign in with your Quomerce account (OAuth) the first
   time Claude uses it. Claude sees only the shops your account is a member of, and can only read.
-- **Playwright MCP** ([`@playwright/mcp`](https://github.com/microsoft/playwright-mcp), Microsoft), a
-  browser Claude can drive to open your shop, click through it and take screenshots. It runs on your
-  own computer with `npx`, so it needs [Node.js](https://nodejs.org) 18 or newer and works only in
-  Claude Code and the Claude desktop app, not in claude.ai chat. The browser profile is kept in memory
-  (`--isolated`), so nothing it signs in to is saved. The version is pinned and raised by hand.
+- **Playwright** as a dependency: the [`playwright`](https://github.com/anthropics/claude-plugins-official/tree/main/external_plugins/playwright)
+  plugin from Anthropic's official marketplace, which runs Microsoft's
+  [Playwright MCP](https://github.com/microsoft/playwright-mcp). It gives Claude a browser to open your
+  shop, click through it and take screenshots. Claude Code installs it with this plugin. It runs on your
+  own computer with `npx`, so it needs [Node.js](https://nodejs.org) 18 or newer. In claude.ai, turn on
+  the Playwright plugin yourself as well.
 - **Skills** in `skills/`.
 - **Agents** in `agents/`.
 

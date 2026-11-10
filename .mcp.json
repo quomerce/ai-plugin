@@ -3,11 +3,6 @@
     "quomerce": {
       "type": "http",
       "url": "https://api.quomerce.com/mcp"
-    },
-    "playwright": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp@0.0.85", "--isolated"]
     }
   }
 }

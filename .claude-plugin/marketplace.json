@@ -13,5 +13,8 @@
       "source": "./",
       "description": "Ask Claude about your online shop: sessions, orders, funnel, errors, replays and uptime from Quomerce."
     }
+  ],
+  "allowCrossMarketplaceDependenciesOn": [
+    "claude-plugins-official"
   ]
 }

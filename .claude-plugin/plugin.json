@@ -19,5 +19,8 @@
     "errors",
     "shopify",
     "idosell"
+  ],
+  "dependencies": [
+    "playwright@claude-plugins-official"
   ]
 }
