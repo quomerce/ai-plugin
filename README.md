@@ -54,6 +54,11 @@ command ready to copy.
 
 - **MCP server** `https://api.quomerce.com/mcp`. You sign in with your Quomerce account (OAuth) the first
   time Claude uses it. Claude sees only the shops your account is a member of, and can only read.
+- **Playwright MCP** ([`@playwright/mcp`](https://github.com/microsoft/playwright-mcp), Microsoft), a
+  browser Claude can drive to open your shop, click through it and take screenshots. It runs on your
+  own computer with `npx`, so it needs [Node.js](https://nodejs.org) 18 or newer and works only in
+  Claude Code and the Claude desktop app, not in claude.ai chat. The browser profile is kept in memory
+  (`--isolated`), so nothing it signs in to is saved. The version is pinned and raised by hand.
 - **Skills** in `skills/`.
 - **Agents** in `agents/`.
 
@@ -61,7 +66,7 @@ The outside research (`market-research`, and that part of `ultra-dive`) uses Cla
 and page fetching. Turn web search on where your Claude app has a switch for it; without it, the review
 says it could not check the market.
 
-No hooks, no local programs, no API keys to paste.
+No hooks and no API keys to paste. The only local program is the Playwright browser above.
 
 ## Install
 
