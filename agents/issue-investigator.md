@@ -18,8 +18,8 @@ How to work:
    - otherwise: `tracking_sessions` with the matching filters (`has_errors`, `has_frustration`,
      `reached_step`, `not_step`, `url`, `journey`, `device`, `browser`, `country`, `source`,
      `payment_method`), 50 to 100 a page.
-3. Read up to 20 sessions with `tracking_session_story` (short text; `tracking_session` only for the
-   technical detail of one), spread over the period rather than the newest 20.
+3. Read up to 20 sessions with `tracking_session_story` (short text), spread over the period rather
+   than the newest 20. To see one, `tracking_session_screenshots`.
    For each, note: device and browser, landing source, pages in order, the first error or dead click
    and what the visitor did right after, whether they ordered.
 4. If a comparison helps, read up to 10 sessions from the opposite group (for example sessions that

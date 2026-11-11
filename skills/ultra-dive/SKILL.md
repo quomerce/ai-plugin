@@ -104,7 +104,7 @@ Keep it under about 600 words. Use this shape every week, so it can be compared:
 
 Links: `https://app.quomerce.com/app/a/<account_id>/websites/<website_id>/tracking/<page>`, where
 `<page>` is `overview`, `funnel`, `funnel/payments`, `forms`, `issues/<fingerprint>`, `sessions/<session_id>`,
-`pages` or `heatmaps`. `tracking_session` and `tracking_session_story` return the session's own `url`.
+`pages` or `heatmaps`. `tracking_session_story` returns the session's own `url`.
 
 If you ran interactively and one fact would change the strategy (for example where the shop posts, or
 whether it ever ran ads), end with that one question.
