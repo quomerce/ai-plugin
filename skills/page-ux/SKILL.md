@@ -25,8 +25,9 @@ Read the `quomerce-data` skill first.
      show.
    - `scroll.reached[i]`: the share of page views that reached i × 5 % of the page height. Find where
      it falls under 50 % and under 25 %, and what sits below that line.
-   - `revenue.zones`: per element, `conversion_rate` and `revenue_per_click_session` against the
-     page's own (`page_ordered_sessions` / `page_sessions`). An element whose clickers order much more
+   - Revenue per element, on each zone when the shop sends orders: `conversion_rate` and
+     `revenue_per_click_session`, against the page's own in `revenue` (`page_ordered_sessions` /
+     `page_sessions`). An element whose clickers order much more
      often than the page's visitors is what buyers use: make it easier to find. One clicked a lot by
      people who rarely order is a distraction, or a sign of a problem (a size chart opened again and
      again).

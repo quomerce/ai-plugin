@@ -13,7 +13,7 @@ Lighthouse test of one page load. Real visits are what matter for sales.
 ## Steps
 
 1. Find the website. Period: the last 28 whole days, with `compare: true`.
-2. `tracking_pages`. Read:
+2. `tracking_pages` with `include: ["trend"]` (the series are left out without it). Read:
    - `page_types` and `top_paths`: per row, `views`, `exit_rate`, `js_errors_per_1000_views` and
      `vitals` per device with the 75th percentile (`lcp_p75`, `inp_p75` in ms, `cls_p75`).
    - `speed.ratings`: per device and metric, how measurements split into good, needs improvement and

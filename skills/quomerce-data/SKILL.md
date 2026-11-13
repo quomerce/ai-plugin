@@ -40,6 +40,16 @@ the dashboard at https://app.quomerce.com shows.
 - `not_collected` is not direct: the landing page was never read, so the source is unknown.
 - "Today" is not finished. Do not compare a part of today with a full day without saying so.
 
+## Answer size
+
+Answers are kept to about 10,000 tokens. Chart series come only when you ask for them with
+`include`: `tracking_funnel` `["hourly"]`, `tracking_forms` and `tracking_pages` `["trend"]`,
+`tracking_overview` `["by_hour"]` (the last day hour by hour). Ask only when the question is about
+when something happened. If an answer had to be shortened, `left_out` names each list and how many
+items were kept: narrow the range, filter, page, or open one item instead of guessing at the rest.
+Forms nobody started and fields nobody used are counted (`forms_not_started`, `fields_not_used`),
+not listed. An issue group lists its three busiest issues; `issue_count` says how many it holds.
+
 ## Money and orders
 
 - Money is in **minor units** of the shop's currency: `12999` with `PLN` is 129.99 zł. Always convert
@@ -110,7 +120,7 @@ from a list and left within seconds), `tax_id_entered` (a company buyer), `check
 - Why a day was busy or quiet: `tracking_calendar` (holidays, trading Sundays, paydays, pension
   payouts, shopping days; Polish shops only for now). A payday is a possible reason, not proof.
 - What visitors did: `tracking_sessions`, then `tracking_session_story` (the session as short text,
-  with a link to its recording). Prefer it to `tracking_session`, which is long.
+  with a link to its recording).
 - What visitors saw: `tracking_session_screenshots` (pictures of a session's key moments, drawn from
   its recording) and `tracking_heatmap` with `image: true` (the page with its clicks). You see these
   pictures yourself; `show_session_replay` and `show_heatmap` only show the person a player. Each
