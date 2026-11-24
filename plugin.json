@@ -1,0 +1,23 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "quomerce",
+  "version": "1.0.0",
+  "description": "Find what is broken for your shoppers, where your shop can sell more, and whether a change worked, by watching real Quomerce recordings and testing the live shop.",
+  "author": {
+    "name": "Quomerce",
+    "url": "https://www.quomerce.com"
+  },
+  "homepage": "https://www.quomerce.com",
+  "repository": "https://github.com/quomerce/ai-plugin",
+  "license": "MIT",
+  "keywords": [
+    "ecommerce",
+    "conversion",
+    "session-replay",
+    "checkout",
+    "upsell",
+    "cross-sell",
+    "shopify",
+    "idosell"
+  ]
+}

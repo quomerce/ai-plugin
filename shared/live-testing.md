@@ -14,6 +14,9 @@ No browser tool: say "not tested live" on each finding, work from Quomerce's scr
 heatmaps, and at the end tell the person in one line that a browser would let you test the shop
 (for example the Playwright MCP server, `npx @playwright/mcp@latest`).
 
+Several things to test and an app that runs subagents: hand each test to the `shop-tester` agent,
+with the shop's address, the device and the steps from the story.
+
 ## Be the shopper you watched
 
 - **Same device.** Most shoppers are on phones. If the sessions were on a phone, resize to a phone

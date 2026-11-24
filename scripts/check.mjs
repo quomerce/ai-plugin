@@ -75,13 +75,22 @@ try {
 }
 
 // ── Manifests ─────────────────────────────────────────────────────────────
-// Every JSON manifest that carries a version must carry the same one.
-const MANIFESTS = [
-  '.claude-plugin/plugin.json',
-  '.claude-plugin/marketplace.json',
-  '.mcp.json',
-];
-for (const file of MANIFESTS) {
+// One package, one manifest per host family (see README, "What is inside").
+// Every manifest names the plugin `quomerce` and carries the same version,
+// and every MCP config points at the same server.
+const MCP_URL = 'https://api.quomerce.com/mcp';
+const MANIFESTS = {
+  '.claude-plugin/plugin.json': { name: 'quomerce' },
+  '.claude-plugin/marketplace.json': { name: 'quomerce' },
+  'plugin.json': { name: 'quomerce' },
+  '.agents/plugins/marketplace.json': { name: 'quomerce' },
+  '.antigravity-plugin/plugin.json': { name: 'quomerce' },
+  'gemini-extension.json': { name: 'quomerce', mcp: (j) => j.mcpServers?.quomerce?.httpUrl },
+  '.mcp.json': { mcp: (j) => j.mcpServers?.quomerce?.type === 'http' && j.mcpServers.quomerce.url },
+  'mcp.json': { mcp: (j) => j.mcpServers?.quomerce?.type === 'streamable-http' && j.mcpServers.quomerce.url },
+  'mcp_config.json': { mcp: (j) => j.mcpServers?.quomerce?.serverUrl },
+};
+for (const [file, want] of Object.entries(MANIFESTS)) {
   if (!existsSync(join(root, file))) {
     fail(`${file}: missing`);
     continue;
@@ -93,7 +102,12 @@ for (const file of MANIFESTS) {
     fail(`${file}: not valid JSON (${err.message})`);
     continue;
   }
+  if (want.name && json.name !== want.name) fail(`${file}: name is "${json.name}", expected "${want.name}"`);
+  if (want.mcp && want.mcp(json) !== MCP_URL) fail(`${file}: the quomerce MCP server must be ${MCP_URL} in this file's format`);
   if (typeof json.version === 'string') versions.set(file, json.version);
+  for (const [i, p] of (json.plugins ?? []).entries()) {
+    if (typeof p.version === 'string') versions.set(`${file} plugins[${i}]`, p.version);
+  }
 }
 const distinct = new Set(versions.values());
 if (distinct.size > 1) {
@@ -104,4 +118,4 @@ if (errors.length) {
   for (const e of errors) console.error(`✗ ${e}`);
   process.exit(1);
 }
-console.log(`✓ ${skills.length} skills, ${MANIFESTS.length} manifests, version ${[...distinct][0] ?? 'none'}`);
+console.log(`✓ ${skills.length} skills, ${Object.keys(MANIFESTS).length} manifests, version ${[...distinct][0] ?? 'none'}`);

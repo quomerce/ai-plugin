@@ -9,9 +9,9 @@ your data (read-only), picks the recordings worth watching, looks at what shoppe
 steps on your live shop in a browser, and only then counts. You get a few findings you can watch for
 yourself, not a page of numbers.
 
-Works in Claude (Claude Code, Cowork, claude.ai), ChatGPT, Codex, Gemini CLI, Antigravity, Cursor,
-GitHub Copilot and any other app that reads [Agent Skills](https://agentskills.io) and connects to
-MCP servers. See [Install](#install).
+Works in Claude (Claude Code, Cowork, claude.ai), ChatGPT and Codex, Antigravity and Gemini CLI,
+Cursor, GitHub Copilot, Grok, Devin and any other app that reads [Agent Skills](https://agentskills.io)
+and connects to MCP servers. See [Install](#install).
 
 ## Three questions
 
@@ -46,7 +46,92 @@ You need a Quomerce account with at least one tracked website: sign up at
 https://www.quomerce.com. The first time the assistant uses Quomerce, you sign in with your Quomerce
 account (OAuth). It sees only the shops your account belongs to, and can only read.
 
-INSTALL_SECTION
+The skills and the Quomerce connection install together as a plugin where your app has plugins.
+Where it does not, add the skills and the connection separately ([any other app](#any-other-app)).
+
+### Claude Code
+
+```
+/plugin marketplace add quomerce/ai-plugin
+/plugin install quomerce@quomerce
+```
+
+Then run `/mcp` and sign in to `quomerce`.
+
+### Claude (claude.ai, desktop, Cowork)
+
+**Customize → Plugins**, add the marketplace `quomerce/ai-plugin` from GitHub, install **Quomerce**,
+then **Connect** it on the plugin's Connectors tab. On Team and Enterprise plans an Owner adds it
+first.
+
+### Codex (CLI, IDE, ChatGPT desktop app)
+
+```bash
+codex plugin marketplace add quomerce/ai-plugin
+```
+
+Then install **Quomerce** from the plugin list. Codex asks you to sign in to Quomerce; if it does
+not, run `codex mcp login quomerce`.
+
+### ChatGPT
+
+A workspace admin imports the plugin for everyone: **Plugins → Import marketplace**, with the GitHub
+repository `quomerce/ai-plugin`. On your own, **Plugins → + → Add custom MCP server** with
+`https://api.quomerce.com/mcp` connects Quomerce without the skills: ChatGPT still follows the
+server's own short guide, but not the skills' full steps.
+
+### Antigravity
+
+```bash
+agy plugin install https://github.com/quomerce/ai-plugin
+```
+
+Gemini CLI, where you still have it: `gemini extensions install https://github.com/quomerce/ai-plugin`.
+
+### Cursor
+
+Import the repository `https://github.com/quomerce/ai-plugin` as a plugin (a team admin can share
+it), or use [any other app](#any-other-app).
+
+### GitHub Copilot
+
+```bash
+copilot plugin install quomerce/ai-plugin
+```
+
+In VS Code: **Chat: Install Plugin from Source**, then `https://github.com/quomerce/ai-plugin`.
+
+### Grok
+
+Grok Build reads this repository as a Claude plugin:
+
+```bash
+grok plugin marketplace add quomerce/ai-plugin
+grok plugin install quomerce --trust
+```
+
+On grok.com, add a custom connector with `https://api.quomerce.com/mcp`: the connection without the
+skills.
+
+### Devin
+
+```bash
+devin plugins install quomerce/ai-plugin
+```
+
+### Any other app
+
+Add the skills with the [skills](https://github.com/vercel-labs/skills) installer, which knows where
+each app keeps them:
+
+```bash
+npx skills add quomerce/ai-plugin
+```
+
+Then add the MCP server `https://api.quomerce.com/mcp` in your app's MCP settings, as a remote server
+of type `http` (also called streamable HTTP). If the app cannot sign in with OAuth, create a token in
+Quomerce under **Account settings → AI assistant access (MCP)** and send it as
+`Authorization: Bearer qm_mcp_…`.
 
 ### A browser
 
@@ -70,8 +155,17 @@ skills/                 the three skills, in the Agent Skills format
   did-it-work/
 agents/                 two helpers for apps that run subagents: session-watcher, shop-tester
 shared/                 references every skill needs, copied into each skill's references/
-MANIFESTS_TREE
+
+.claude-plugin/         Claude Code, Claude apps, Grok Build, Devin, ChatGPT's import, npx skills
+.mcp.json               the Quomerce MCP server, for those
+plugin.json, mcp.json   Agent Plugins: Codex and ChatGPT, Cursor, GitHub Copilot
+.agents/plugins/        the Codex marketplace
+.antigravity-plugin/    Antigravity, with mcp_config.json
+gemini-extension.json   Gemini CLI
 ```
+
+The helpers in `agents/` load in Claude Code, Cowork, Grok Build, Devin and Antigravity. Elsewhere the
+skills do the same work themselves.
 
 No hooks, no local programs, no API keys to paste. The plugin sends nothing by itself: when the
 assistant calls a Quomerce tool, it reads your shop's data through the Quomerce API under your sign-in.

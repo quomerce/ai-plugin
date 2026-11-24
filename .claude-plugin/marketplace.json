@@ -5,13 +5,14 @@
     "url": "https://www.quomerce.com"
   },
   "metadata": {
-    "description": "The Quomerce plugin: shop analytics from Quomerce in Claude."
+    "description": "The Quomerce plugin: shoppers' recordings, the live shop and your shop's data, for AI agents."
   },
   "plugins": [
     {
       "name": "quomerce",
       "source": "./",
-      "description": "Ask Claude about your online shop: sessions, orders, funnel, errors, replays and uptime from Quomerce."
+      "description": "Find what is broken for your shoppers, where your shop can sell more, and whether a change worked, by watching real Quomerce recordings and testing the live shop.",
+      "version": "1.0.0"
     }
   ]
 }
