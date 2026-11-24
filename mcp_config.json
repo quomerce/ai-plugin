@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "quomerce": {
+      "serverUrl": "https://api.quomerce.com/mcp"
+    }
+  }
+}

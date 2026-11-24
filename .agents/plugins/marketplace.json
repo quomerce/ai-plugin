@@ -1,0 +1,20 @@
+{
+  "name": "quomerce",
+  "interface": {
+    "displayName": "Quomerce"
+  },
+  "plugins": [
+    {
+      "name": "quomerce",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
