@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "quomerce",
   "version": "1.0.0",
-  "description": "Find what is broken for your shoppers, where your shop can sell more, and whether a change worked, by watching real Quomerce recordings and testing the live shop.",
+  "description": "Find what is broken for your shoppers and where your shop can sell more, and audit its navigation, by watching real Quomerce recordings and testing the live shop.",
   "author": {
     "name": "Quomerce",
     "url": "https://www.quomerce.com"

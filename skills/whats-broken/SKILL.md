@@ -127,8 +127,7 @@ and list what you watched and tried: that is a good answer, not a failure.
   same method on the live shop up to the provider's page only.
 - **One error.** `tracking_issue` for its trend, pages, browsers and stack, then steps 3 to 6.
 - **The weekly review.** Last 7 days. At most two findings here, then run the `sell-more` skill for
-  at most two ideas, so the review is four items at most. If last week's findings are in the
-  conversation or memory, check them first with the `did-it-work` skill.
+  at most two ideas, so the review is four items at most.
 - **The shop's code is open** (a coding agent in the shop's repository): after a finding, find the
-  file from the stack or the element, propose the fix, and once it is live check it with
-  `did-it-work`.
+  file from the stack or the element, propose the fix, and once it is live try it on the live shop
+  as in step 4.

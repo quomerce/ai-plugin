@@ -1,8 +1,8 @@
 # Quomerce for AI agents
 
 Your AI assistant watches real shoppers on your shop, tries the shop itself, and tells you
-**what is broken**, **where you can sell more** and **whether a change worked**, or writes a full
-**navigation audit** as a Quomerce report you can hand to your team.
+**what is broken** and **where you can sell more**, or writes a full **navigation audit** as a
+Quomerce report you can hand to your team.
 
 It connects your assistant to [Quomerce](https://www.quomerce.com), which records what visitors do on
 your shop: every visit as a story and a replay, the checkout, errors and orders. The assistant reads
@@ -20,7 +20,6 @@ and connects to MCP servers. See [Install](#install).
 |---|---|---|
 | [`whats-broken`](skills/whats-broken/SKILL.md) | "Is anything broken for my shoppers?" "Why do people leave checkout?" "Why did sales drop on Tuesday?" | Finds shoppers who wanted to buy and did not, watches their recordings, tries the same steps on your shop, and counts how many it hits. At most three findings, each with a recording to watch and a fix. |
 | [`sell-more`](skills/sell-more/SKILL.md) | "How can I sell more?" "What should I cross-sell?" "Which promotion for Black Friday?" | Watches shoppers who almost bought, reads what your buyers buy together and how big their baskets are, looks at your product page and cart, and proposes three changes with the money each could bring. |
-| [`did-it-work`](skills/did-it-work/SKILL.md) | "Did the new checkout help?" "Is the BLIK problem gone?" | Checks the change is live and works, watches shoppers who went through it since, and compares the one figure it was meant to move, fairly. |
 | [`navigation-audit`](skills/navigation-audit/SKILL.md) | "Audit the navigation of myshop.com." "Why do people leave our category pages?" "Is our search any good on phones?" | Maps where shoppers come in and where they go next, reads the heatmaps of the main pages, watches recordings, reads the menu, search, lists and product page on a phone, and writes a report in the Quomerce design: the top changes in order, the evidence for each, a plan and today's figures to measure against. One HTML file that prints to PDF. |
 
 **The weekly review:** ask "Quomerce weekly review for myshop.com". The assistant runs the first two
@@ -154,7 +153,6 @@ live.
 skills/                 the skills, in the Agent Skills format
   whats-broken/
   sell-more/
-  did-it-work/
   navigation-audit/     also assets/report-template.html (the Quomerce report) and
                         scripts/build-report.mjs (fills it, embeds the pictures)
 agents/                 two helpers for apps that run subagents: session-watcher, shop-tester
