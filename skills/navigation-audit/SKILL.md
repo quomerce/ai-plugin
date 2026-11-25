@@ -127,7 +127,7 @@ it.
 - Rank by shoppers reached × how hard it stops them × effort, cheap first when close. The top five
   go in the summary.
 - For every change, the figure it should move and its value today, from a tool or query that can be
-  run again: that table is how the `did-it-work` skill will judge it later.
+  run again: that table is how the change is judged later.
 
 ## 7. Write the report
 
@@ -160,8 +160,6 @@ not the report again. Mention once that **Save as PDF** at the top prints it on 
 - **One area** ("audit our search", "is our menu any good", "review this landing page"): steps 1
   and 2 for what concerns it, steps 3 to 6 for that area, and the same report with one area,
   without the plan columns.
-- **Before and after:** after changes went live, run the `did-it-work` skill for each, against the
-  **How to measure** table of the earlier report.
 - **Another report in this design:** when the person wants the findings of `whats-broken` or
   `sell-more` as a document, use the same template and `references/report-design.md`, one area
   section per finding.

@@ -108,8 +108,7 @@ One line: where the shop leaves the most money and why. Then three changes, most
 - **Why:** what shoppers do now, with one recording link, and the number ("31 % of orders are
   150–199 zł").
 - **Worth:** about how much a month, with the assumption.
-- **Test it:** what to measure and for how long; on the day it goes live, ask for the `did-it-work`
-  skill.
+- **Test it:** what to measure, for how long, and its value today to compare with.
 - **Effort:** a setting, a theme change, or a developer's task.
 
 Under about 400 words. No tables of metrics, no tool names, no ids.

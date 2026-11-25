@@ -11,7 +11,7 @@
     {
       "name": "quomerce",
       "source": "./",
-      "description": "Find what is broken for your shoppers, where your shop can sell more, and whether a change worked, by watching real Quomerce recordings and testing the live shop.",
+      "description": "Find what is broken for your shoppers and where your shop can sell more, and audit its navigation, by watching real Quomerce recordings and testing the live shop.",
       "version": "1.0.0"
     }
   ]
