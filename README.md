@@ -1,7 +1,8 @@
 # Quomerce for AI agents
 
-Your AI assistant watches real shoppers on your shop, tries the shop itself, and tells you three
-things: **what is broken**, **where you can sell more**, and **whether a change worked**.
+Your AI assistant watches real shoppers on your shop, tries the shop itself, and tells you
+**what is broken**, **where you can sell more** and **whether a change worked**, or writes a full
+**navigation audit** as a Quomerce report you can hand to your team.
 
 It connects your assistant to [Quomerce](https://www.quomerce.com), which records what visitors do on
 your shop: every visit as a story and a replay, the checkout, errors and orders. The assistant reads
@@ -13,13 +14,14 @@ Works in Claude (Claude Code, Cowork, claude.ai), ChatGPT and Codex, Antigravity
 Cursor, GitHub Copilot, Grok, Devin and any other app that reads [Agent Skills](https://agentskills.io)
 and connects to MCP servers. See [Install](#install).
 
-## Three questions
+## What you can ask
 
 | Skill | Ask, for example | What it does |
 |---|---|---|
 | [`whats-broken`](skills/whats-broken/SKILL.md) | "Is anything broken for my shoppers?" "Why do people leave checkout?" "Why did sales drop on Tuesday?" | Finds shoppers who wanted to buy and did not, watches their recordings, tries the same steps on your shop, and counts how many it hits. At most three findings, each with a recording to watch and a fix. |
 | [`sell-more`](skills/sell-more/SKILL.md) | "How can I sell more?" "What should I cross-sell?" "Which promotion for Black Friday?" | Watches shoppers who almost bought, reads what your buyers buy together and how big their baskets are, looks at your product page and cart, and proposes three changes with the money each could bring. |
 | [`did-it-work`](skills/did-it-work/SKILL.md) | "Did the new checkout help?" "Is the BLIK problem gone?" | Checks the change is live and works, watches shoppers who went through it since, and compares the one figure it was meant to move, fairly. |
+| [`navigation-audit`](skills/navigation-audit/SKILL.md) | "Audit the navigation of myshop.com." "Why do people leave our category pages?" "Is our search any good on phones?" | Maps where shoppers come in and where they go next, reads the heatmaps of the main pages, watches recordings, reads the menu, search, lists and product page on a phone, and writes a report in the Quomerce design: the top changes in order, the evidence for each, a plan and today's figures to measure against. One HTML file that prints to PDF. |
 
 **The weekly review:** ask "Quomerce weekly review for myshop.com". The assistant runs the first two
 and gives you at most four things to do this week. The AI assistant page in the Quomerce dashboard has
@@ -149,10 +151,12 @@ live.
 ## What is inside
 
 ```
-skills/                 the three skills, in the Agent Skills format
+skills/                 the skills, in the Agent Skills format
   whats-broken/
   sell-more/
   did-it-work/
+  navigation-audit/     also assets/report-template.html (the Quomerce report) and
+                        scripts/build-report.mjs (fills it, embeds the pictures)
 agents/                 two helpers for apps that run subagents: session-watcher, shop-tester
 shared/                 references every skill needs, copied into each skill's references/
 
@@ -167,8 +171,10 @@ gemini-extension.json   Gemini CLI
 The helpers in `agents/` load in Claude Code, Cowork, Grok Build, Devin and Antigravity. Elsewhere the
 skills do the same work themselves.
 
-No hooks, no local programs, no API keys to paste. The plugin sends nothing by itself: when the
-assistant calls a Quomerce tool, it reads your shop's data through the Quomerce API under your sign-in.
+No hooks, no API keys to paste, and nothing runs on its own: the one script, the navigation audit's
+report builder, runs only when the assistant builds a report, and reads only the template and the
+report's own folder. The plugin sends nothing by itself: when the assistant calls a Quomerce tool, it
+reads your shop's data through the Quomerce API under your sign-in.
 
 ## Privacy
 
@@ -180,8 +186,11 @@ data. See the [Privacy Policy](https://www.quomerce.com/privacy) and
 
 - Edit `shared/*.md`, never the copies in `skills/*/references/`. Then run
   `node scripts/sync-shared.mjs`.
-- `node scripts/check.mjs` checks the skills against the Agent Skills format, the references they name,
-  the copies, and that every manifest carries the same version. CI runs it on every pull request.
+- `node scripts/check.mjs` checks the skills against the Agent Skills format, the references, assets
+  and scripts they name, the copies, the report template's markers, and that every manifest carries
+  the same version. CI runs it on every pull request.
+- The report template (`skills/navigation-audit/assets/report-template.html`) carries the Quomerce
+  dashboard's tokens from quomerce-app's `apps/web/src/index.css`. Change them there first.
 - A release raises the version in every manifest at once.
 
 Questions or problems: open an issue in this repository.
