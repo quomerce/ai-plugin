@@ -61,8 +61,26 @@ for (const { name: dir } of skills) {
   if ((fm.compatibility ?? '').length > 500) fail(`${where}: compatibility is over 500 chars`);
   const lines = text.split('\n').length;
   if (lines > 500) fail(`${where}: ${lines} lines, keep SKILL.md under 500`);
-  for (const [, ref] of text.matchAll(/`(references\/[^`\s]+\.md)`/g)) {
-    if (!existsSync(join(root, 'skills', dir, ref))) fail(`${where}: names ${ref}, which does not exist`);
+  // Files a skill names, in SKILL.md or in its references: references, assets and scripts it ships.
+  const refDir = join(root, 'skills', dir, 'references');
+  const texts = [[where, text]];
+  if (existsSync(refDir)) {
+    for (const f of readdirSync(refDir).filter((f) => f.endsWith('.md'))) {
+      texts.push([`skills/${dir}/references/${f}`, readFileSync(join(refDir, f), 'utf8')]);
+    }
+  }
+  for (const [file, body] of texts) {
+    for (const [, ref] of body.matchAll(/`((?:references\/[^`\s]+\.md)|(?:(?:assets|scripts)\/[^`\s]+\.[a-z]+))`/g)) {
+      if (!existsSync(join(root, 'skills', dir, ref))) fail(`${file}: names ${ref}, which does not exist`);
+    }
+  }
+  // A report template is filled between its markers (scripts/build-report.mjs).
+  const template = join(root, 'skills', dir, 'assets', 'report-template.html');
+  if (existsSync(template)) {
+    const html = readFileSync(template, 'utf8');
+    if (!/<!-- report:start -->[\s\S]*<!-- report:end -->/.test(html))
+      fail(`skills/${dir}/assets/report-template.html: the report:start and report:end markers are missing`);
+    if (/<script\b/i.test(html)) fail(`skills/${dir}/assets/report-template.html: no <script> in the template`);
   }
   if (fm['metadata.version']) versions.set(where, fm['metadata.version']);
 }

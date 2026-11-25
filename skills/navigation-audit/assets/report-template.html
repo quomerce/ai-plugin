@@ -1,0 +1,1177 @@
+<!doctype html>
+<!--
+  Quomerce report template.
+
+  Keep <style> and the icon sprite exactly as they are. Replace what is between report:start and
+  report:end with the report, and the {{…}} in <html lang>, <title> and the description. Inside,
+  every {{…}} is a placeholder and every comment says what goes there; delete the comments and any
+  component you do not use. scripts/build-report.mjs does the replacing and embeds the pictures.
+  The components and how to write for them: references/report-design.md.
+
+  One file, no scripts beyond the print button, fonts from Google Fonts with system fallbacks. It
+  reads on a phone, follows the reader's light or dark setting on screen, and prints on A4 in light.
+-->
+<html lang="{{en|pl|de}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Quomerce report template 1.0">
+<!-- Two to four words: the report's name and the shop, e.g. "Navigation audit myshop.com". -->
+<title>{{Report name}} {{shop host}}</title>
+<meta name="description" content="{{One sentence: what the report found.}}">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 589.12 461.49'%3E%3Cpath fill='%234BE9C7' d='M589.12,461.49h-86.67v-86.67h86.67v86.67ZM415.78,374.82l86.67,86.67v-86.67h-86.67ZM329.11,288.15l86.67,86.67v-86.67h-86.67ZM84.9,0H-1.77v86.67h86.67V0ZM502.45,86.67h-86.67v288.15h86.67V86.67ZM171.57,86.67h-86.67v288.15h86.67V86.67ZM415.78,461.49v-86.67h-244.21v86.67h244.21ZM415.78,86.67V0h-244.21v86.67h244.21Z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Urbanist:wght@600;700&display=swap">
+<style>
+/* ── Quomerce report ─────────────────────────────────────────────────────
+   The dashboard's look (quomerce-app: apps/web/src/index.css, `.qm-app`):
+   warm-neutral paper, white sheets on hairlines, near-black green ink. Jade
+   is for links and actions, amethyst for data, and the bright mint lives
+   only on the dark ink panel. Geist for text, Urbanist for titles and big
+   figures, Geist Mono for addresses. Tokens are RGB triplets. Do not edit. */
+:root {
+  color-scheme: light;
+  --bg: 245 245 242;
+  --surface: 255 255 255;
+  --fg: 37 43 39;
+  --accent: 33 107 87;
+  --accent-hover: 27 90 73;
+  --mint: 120 247 222;
+  --data: 148 116 212;
+  --data-deep: 106 79 184;
+  --critical: 164 70 58;
+  --high: 168 92 30;
+  --medium: 138 100 22;
+  --low: 60 98 160;
+  --success: 33 107 87;
+  --rule: rgb(var(--fg) / 0.1);
+  --rule-strong: rgb(var(--fg) / 0.17);
+  --tint: rgb(var(--fg) / 0.045);
+  --text-soft: rgb(var(--fg) / 0.8);
+  --text-muted: rgb(var(--fg) / 0.66);
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --font-sans: Geist, ui-sans-serif, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-display: Urbanist, Geist, ui-sans-serif, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: 18 21 20;
+    --surface: 26 30 28;
+    --fg: 232 234 229;
+    --accent: 111 195 166;
+    --accent-hover: 150 215 190;
+    --data: 168 139 230;
+    --data-deep: 201 182 245;
+    --critical: 229 154 134;
+    --high: 226 156 104;
+    --medium: 216 178 106;
+    --low: 150 180 230;
+    --success: 111 195 166;
+    --rule: rgb(var(--fg) / 0.09);
+    --rule-strong: rgb(var(--fg) / 0.15);
+    --tint: rgb(var(--fg) / 0.05);
+    --ink-edge: rgb(255 255 255 / 0.08);
+  }
+}
+
+@media screen {
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: 18 21 20;
+    --surface: 26 30 28;
+    --fg: 232 234 229;
+    --accent: 111 195 166;
+    --accent-hover: 150 215 190;
+    --data: 168 139 230;
+    --data-deep: 201 182 245;
+    --critical: 229 154 134;
+    --high: 226 156 104;
+    --medium: 216 178 106;
+    --low: 150 180 230;
+    --success: 111 195 166;
+    --rule: rgb(var(--fg) / 0.09);
+    --rule-strong: rgb(var(--fg) / 0.15);
+    --tint: rgb(var(--fg) / 0.05);
+    --ink-edge: rgb(255 255 255 / 0.08);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "tnum";
+}
+
+::selection { background: rgb(var(--accent) / 0.25); }
+
+:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 2px; border-radius: 3px; }
+
+a {
+  color: rgb(var(--accent));
+  text-decoration: underline;
+  text-decoration-color: rgb(var(--accent) / 0.35);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 140ms ease, text-decoration-color 140ms ease;
+}
+
+@media (hover: hover) {
+  a:hover { color: rgb(var(--accent-hover)); text-decoration-color: currentColor; }
+}
+
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+
+p { margin: 0; text-wrap: pretty; }
+
+strong { font-weight: 600; }
+
+code, .qm-mono {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  font-feature-settings: normal;
+}
+
+code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--tint);
+  overflow-wrap: anywhere;
+}
+
+img { max-width: 100%; }
+
+.qm-i {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── Page ─────────────────────────────────────────────────────────────── */
+.qm-report {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 24px 72px;
+}
+
+.qm-report > * + * { margin-top: 28px; }
+
+/* Components reset their margins at no specificity, so the flow spacing above and below wins. */
+:where(.qm-priorities, .qm-facts, .qm-list, .qm-changes, .qm-links, .qm-shot, .qm-chart, .qm-strip, .qm-plan, .qm-table-wrap, .qm-note) { margin: 0; }
+
+.qm-prose { max-width: 68ch; }
+.qm-prose > * + * { margin-top: 12px; }
+
+.qm-lead { font-size: 17px; line-height: 1.55; color: var(--text-soft); max-width: 64ch; }
+
+.qm-label {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-muted);
+}
+
+/* ── Masthead: the wordmark, the kind of report, and a print button ───── */
+.qm-masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 64px;
+  padding: 16px 0 12px;
+}
+
+.qm-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: rgb(var(--fg));
+  text-decoration: none;
+}
+
+.qm-wordmark svg { width: 23px; height: 18px; color: rgb(var(--accent)); fill: currentColor; flex-shrink: 0; }
+
+.qm-wordmark span {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+@media (hover: hover) { .qm-wordmark:hover { color: rgb(var(--fg)); } }
+
+.qm-masthead-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.qm-print {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-sm);
+  background: rgb(var(--surface));
+  color: rgb(var(--fg));
+  font: 500 13px/1 var(--font-sans);
+  cursor: pointer;
+  transition: border-color 140ms ease, transform 160ms var(--ease-out);
+}
+
+.qm-print:active { transform: scale(0.97); }
+
+@media (hover: hover) { .qm-print:hover { border-color: rgb(var(--fg) / 0.3); } }
+
+/* ── Cover: the one dark ink panel, with a spectral glow in its corner ─── */
+.qm-ink {
+  --fg: 238 242 239;
+  --accent: 120 247 222;
+  --accent-hover: 162 251 233;
+  --rule: rgb(238 242 239 / 0.12);
+  --text-soft: rgb(238 242 239 / 0.84);
+  --text-muted: rgb(238 242 239 / 0.68);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  color: rgb(var(--fg));
+  color-scheme: dark;
+  background:
+    radial-gradient(40% 72% at 100% 0%, rgb(148 116 212 / 0.5), transparent 70%),
+    radial-gradient(36% 58% at 78% -8%, rgb(30 124 134 / 0.48), transparent 72%),
+    radial-gradient(28% 60% at 100% 55%, rgb(30 124 134 / 0.22), transparent 70%),
+    radial-gradient(22% 40% at 60% -12%, rgb(148 116 212 / 0.16), transparent 70%),
+    linear-gradient(180deg, #121a17, #0f1513 55%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 0 0 1px var(--ink-edge, transparent);
+}
+
+.qm-ink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.qm-cover { padding: 44px 44px 36px; }
+
+.qm-cover-mark {
+  position: absolute;
+  right: -36px;
+  bottom: -44px;
+  z-index: -1;
+  width: 260px;
+  height: 204px;
+  color: rgb(var(--mint));
+  fill: currentColor;
+  opacity: 0.07;
+}
+
+.qm-kicker {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  color: rgb(var(--mint));
+}
+
+.qm-cover h1 {
+  margin-top: 14px;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5.4vw, 46px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+
+.qm-cover .qm-lead { margin-top: 16px; color: var(--text-soft); }
+
+.qm-cover-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px 24px;
+  margin: 32px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+}
+
+.qm-cover-meta dt { font-size: 12.5px; color: var(--text-muted); }
+
+.qm-cover-meta dd { margin: 2px 0 0; font-size: 15px; font-weight: 600; }
+
+/* ── Figure strip: headline figures in ruled cells on one sheet ─────────── */
+.qm-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: rgb(var(--surface));
+}
+
+/* Each cell rules its own left and top edge; the strip's edge clips the outer ones. */
+.qm-cell { padding: 14px 16px 13px; box-shadow: -1px 0 0 var(--rule), 0 -1px 0 var(--rule); }
+
+.qm-cell-label { font-size: 13px; line-height: 1.35; color: var(--text-muted); }
+
+.qm-figure {
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.qm-figure small { font-size: 0.6em; font-weight: 600; letter-spacing: -0.01em; color: var(--text-muted); }
+
+.qm-cell-hint { margin-top: 4px; font-size: 13px; line-height: 1.4; color: var(--text-muted); }
+
+.qm-cell-hint.is-down, .qm-figure.is-down { color: rgb(var(--critical)); }
+.qm-cell-hint.is-up, .qm-figure.is-up { color: rgb(var(--success)); }
+
+/* ── The top changes, in order ─────────────────────────────────────────── */
+.qm-priorities {
+  padding: 0;
+  list-style: none;
+  counter-reset: qm-priority;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: rgb(var(--surface));
+}
+
+.qm-priorities > li {
+  counter-increment: qm-priority;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 4px 14px;
+  padding: 16px 18px;
+}
+
+.qm-priorities > li + li { border-top: 1px solid var(--rule); }
+
+.qm-priorities > li::before {
+  content: counter(qm-priority);
+  grid-row: span 3;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgb(var(--accent) / 0.1);
+  color: rgb(var(--accent));
+  font: 700 15px/1 var(--font-display);
+}
+
+.qm-priorities h3 { font-size: 16px; font-weight: 600; line-height: 1.4; }
+
+.qm-priorities h3 a { color: rgb(var(--fg)); text-decoration-color: var(--rule-strong); }
+
+.qm-priorities p { color: var(--text-soft); }
+
+.qm-priorities .qm-chips { margin-top: 6px; }
+
+/* ── Chips: certainty, who fixes it, effort ────────────────────────────── */
+.qm-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.qm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: rgb(var(--fg) / 0.06);
+  color: var(--text-soft);
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+/* Three bars, as many filled as we are sure: certain 3, likely 2, check 1. */
+.qm-chip[data-certainty]::before {
+  content: "";
+  width: 13px;
+  height: 11px;
+  background:
+    linear-gradient(var(--b1), var(--b1)) 0 100% / 3px 5px no-repeat,
+    linear-gradient(var(--b2), var(--b2)) 5px 100% / 3px 8px no-repeat,
+    linear-gradient(var(--b3), var(--b3)) 10px 100% / 3px 11px no-repeat;
+  --b1: rgb(var(--accent));
+  --b2: rgb(var(--fg) / 0.16);
+  --b3: rgb(var(--fg) / 0.16);
+}
+
+.qm-chip[data-certainty="likely"]::before { --b2: rgb(var(--accent)); }
+.qm-chip[data-certainty="certain"]::before { --b2: rgb(var(--accent)); --b3: rgb(var(--accent)); }
+
+/* Effort: a dot, quick in jade, medium in ochre, large in ink. */
+.qm-chip[data-effort]::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgb(var(--accent));
+}
+
+.qm-chip[data-effort="medium"]::before { background: rgb(var(--medium)); }
+.qm-chip[data-effort="large"]::before { background: rgb(var(--fg) / 0.55); }
+
+/* ── Contents ──────────────────────────────────────────────────────────── */
+.qm-toc ol {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  columns: 2 260px;
+  column-gap: 32px;
+}
+
+.qm-toc li { break-inside: avoid; padding: 5px 0; border-bottom: 1px solid var(--rule); }
+
+.qm-toc a {
+  display: flex;
+  gap: 10px;
+  color: rgb(var(--fg));
+  text-decoration: none;
+}
+
+.qm-toc a span { min-width: 1.4em; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+@media (hover: hover) { .qm-toc a:hover { color: rgb(var(--accent)); } }
+
+/* ── Sections ──────────────────────────────────────────────────────────── */
+.qm-section {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--rule-strong);
+  scroll-margin-top: 16px;
+}
+
+.qm-section > * + * { margin-top: 20px; }
+
+.qm-section > h2,
+.qm-section-head > h2 {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 12px;
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.qm-section > h2:not(:has(.qm-num)),
+.qm-section-head > h2:not(:has(.qm-num)) { display: block; }
+
+.qm-num {
+  display: inline-grid;
+  place-items: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 6px;
+  border-radius: 8px;
+  background: rgb(var(--accent) / 0.1);
+  color: rgb(var(--accent));
+  font-size: 16px;
+  transform: translateY(-3px);
+}
+
+.qm-section-head > * + * { margin-top: 12px; }
+
+.qm-thesis { font-size: 17px; line-height: 1.55; color: var(--text-soft); max-width: 66ch; }
+
+.qm-block > * + * { margin-top: 10px; }
+
+.qm-block-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-muted);
+}
+
+.qm-block-title .qm-i { width: 15px; height: 15px; }
+
+/* What to change: the remedy, on its own white sheet. */
+.qm-block--change {
+  padding: 18px 20px 20px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: rgb(var(--surface));
+}
+
+.qm-block--change .qm-block-title { color: rgb(var(--accent)); }
+
+/* Lists: facts with a bold lead-in, numbered changes. */
+.qm-facts, .qm-list {
+  padding: 0;
+  list-style: none;
+  max-width: 72ch;
+}
+
+.qm-facts > li, .qm-list > li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.qm-facts > li + li, .qm-list > li + li { margin-top: 10px; }
+
+.qm-facts > li::before, .qm-list > li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.72em;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: rgb(var(--accent) / 0.55);
+}
+
+.qm-changes {
+  padding: 0;
+  list-style: none;
+  counter-reset: qm-change;
+  max-width: 72ch;
+}
+
+.qm-changes > li {
+  counter-increment: qm-change;
+  position: relative;
+  padding-left: 30px;
+}
+
+.qm-changes > li + li { margin-top: 10px; }
+
+.qm-changes > li::before {
+  content: counter(qm-change);
+  position: absolute;
+  left: 0;
+  top: 2px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: rgb(var(--accent));
+  color: rgb(var(--surface));
+  font: 700 12px/1 var(--font-sans);
+}
+
+/* ── Where to see it: links to recordings, pages and heatmaps ──────────── */
+.qm-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.qm-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 100%;
+  padding: 6px 11px 6px 9px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: rgb(var(--surface));
+  color: rgb(var(--fg));
+  font-size: 13.5px;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.qm-link .qm-i { color: rgb(var(--accent)); }
+
+.qm-link[data-kind="recording"] .qm-i { color: rgb(var(--data-deep)); }
+
+@media (hover: hover) {
+  .qm-link:hover { border-color: rgb(var(--accent) / 0.5); color: rgb(var(--fg)); }
+}
+
+/* ── Pictures ──────────────────────────────────────────────────────────── */
+
+
+.qm-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: rgb(var(--surface));
+}
+
+.qm-shot figcaption, .qm-chart figcaption.qm-chart-note, .qm-chart-note {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-width: 72ch;
+}
+
+/* A phone screenshot: narrow, so a phone screen reads at phone size. */
+.qm-shot--phone { max-width: 300px; }
+.qm-shot--phone img { border-radius: 18px; }
+
+/* Two or three pictures side by side. */
+.qm-shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.qm-shots .qm-shot--phone { max-width: none; }
+
+/* A picture that lives in Quomerce: a card that opens it, with the caption saying what it shows. */
+.qm-shot-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  border: 1px dashed var(--rule-strong);
+  border-radius: var(--radius);
+  background: rgb(var(--surface));
+  color: rgb(var(--fg));
+  text-decoration: none;
+}
+
+.qm-shot-link > .qm-i {
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  border-radius: 9px;
+  background: rgb(var(--data) / 0.12);
+  color: rgb(var(--data-deep));
+  stroke-width: 1.5;
+}
+
+.qm-shot-link strong { display: block; font-weight: 600; }
+
+.qm-shot-link span span { display: block; margin-top: 1px; font-size: 13px; color: rgb(var(--accent)); }
+
+@media (hover: hover) { .qm-shot-link:hover { border-color: rgb(var(--accent) / 0.55); color: rgb(var(--fg)); } }
+
+/* ── Bars: shares and reach, in amethyst ───────────────────────────────── */
+.qm-chart {
+  container-type: inline-size;
+  padding: 18px 20px 16px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: rgb(var(--surface));
+}
+
+.qm-chart-title { font-size: 14px; font-weight: 600; line-height: 1.4; }
+
+.qm-bars { margin: 14px 0 0; padding: 0; list-style: none; }
+
+.qm-bars > li {
+  display: grid;
+  grid-template-columns: minmax(120px, 34%) minmax(0, 1fr) 4.5em;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.qm-bar-label { min-width: 0; color: var(--text-soft); }
+
+.qm-bar {
+  position: relative;
+  height: 10px;
+  border-radius: 3px;
+  background: rgb(var(--fg) / 0.06);
+}
+
+.qm-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--v, 0%);
+  min-width: 2px;
+  border-radius: 3px;
+  background: rgb(var(--data));
+}
+
+.qm-bars > li.is-focus .qm-bar::after { background: rgb(var(--data-deep)); }
+.qm-bars > li.is-focus .qm-bar-label, .qm-bars > li.is-focus .qm-bar-value { color: rgb(var(--fg)); font-weight: 600; }
+.qm-bars > li.is-bad .qm-bar::after { background: rgb(var(--critical)); }
+.qm-bars > li.is-muted .qm-bar::after { background: rgb(var(--fg) / 0.28); }
+
+.qm-bar-value { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-soft); }
+
+.qm-chart .qm-chart-note { margin-top: 12px; font-size: 12.5px; }
+
+@container (max-width: 460px) {
+  .qm-bars > li { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; padding: 5px 0; }
+  .qm-bars > li .qm-bar { grid-column: 1 / -1; grid-row: 2; }
+}
+
+/* ── Tables ────────────────────────────────────────────────────────────── */
+.qm-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: rgb(var(--surface));
+}
+
+.qm-table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.45; }
+
+.qm-table th {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--rule-strong);
+  color: var(--text-muted);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.qm-table td { padding: 10px 14px; border-top: 1px solid var(--rule); vertical-align: top; }
+
+.qm-table tr:first-child td { border-top: 0; }
+
+.qm-table td:first-child { font-weight: 600; }
+
+.qm-table .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ── A note: a caveat, or how to read something ────────────────────────── */
+.qm-note {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  background: var(--tint);
+  color: var(--text-soft);
+  font-size: 14px;
+  max-width: 76ch;
+}
+
+.qm-note strong { color: rgb(var(--fg)); }
+
+/* ── The plan: three horizons, each a sheet of boxes to tick ───────────── */
+.qm-plan {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.qm-plan-col {
+  padding: 16px 18px 18px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: rgb(var(--surface));
+}
+
+.qm-plan-col h3 { font-size: 15.5px; font-weight: 600; line-height: 1.35; }
+
+.qm-plan-col h3 + p { margin-top: 2px; font-size: 13px; color: var(--text-muted); }
+
+.qm-checklist { margin: 14px 0 0; padding: 0; list-style: none; font-size: 14px; line-height: 1.5; }
+
+.qm-checklist > li { position: relative; padding-left: 24px; }
+
+.qm-checklist > li + li { margin-top: 9px; }
+
+/* The state mark "not checked yet": a dashed box. */
+.qm-checklist > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 14px;
+  height: 14px;
+  border: 1.5px dashed rgb(var(--fg) / 0.4);
+  border-radius: 3px;
+}
+
+/* ── Sources ───────────────────────────────────────────────────────────── */
+.qm-sources > * + * { margin-top: 18px; }
+
+.qm-sources h3 { font-size: 14px; font-weight: 600; }
+
+.qm-sources ul { margin: 8px 0 0; padding: 0; list-style: none; font-size: 14px; }
+
+.qm-sources li { padding: 6px 0; border-top: 1px solid var(--rule); }
+
+.qm-sources li:first-child { border-top: 0; }
+
+.qm-sources li small { display: block; color: var(--text-muted); font-size: 12.5px; }
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+.qm-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-top: 64px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule-strong);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.qm-footer p { max-width: 62ch; }
+
+.qm-footer .qm-wordmark span { font-size: 16px; }
+.qm-footer .qm-wordmark svg { width: 20px; height: 16px; }
+
+/* ── Phones ────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+  .qm-report { padding: 0 16px 56px; }
+  .qm-masthead { min-height: 56px; }
+  .qm-masthead-meta > span { display: none; }
+  .qm-cover { padding: 28px 22px 24px; }
+  .qm-cover-mark { width: 180px; height: 141px; right: -28px; bottom: -32px; }
+  .qm-cover-meta { grid-template-columns: 1fr 1fr; }
+  .qm-strip { grid-template-columns: 1fr 1fr; }
+  .qm-figure { font-size: 24px; }
+  .qm-section { margin-top: 44px; padding-top: 32px; }
+  .qm-section > h2, .qm-section-head > h2 { font-size: 23px; }
+  .qm-thesis, .qm-lead { font-size: 16px; }
+  .qm-priorities > li { padding: 14px; gap: 4px 12px; }
+  .qm-block--change, .qm-chart, .qm-plan-col { padding-left: 16px; padding-right: 16px; }
+  .qm-shots { grid-template-columns: 1fr 1fr; gap: 12px; }
+}
+
+/* ── Paper: A4, always light, nothing interactive ──────────────────────── */
+@page { size: A4; margin: 14mm 14mm 16mm; }
+
+@media print {
+  body { background: #fff; font-size: 10.5pt; line-height: 1.5; }
+  .qm-report { max-width: none; padding: 0; }
+  .qm-print { display: none; }
+  .qm-ink, .qm-chip, .qm-bar, .qm-bar::after, .qm-num, .qm-priorities > li::before, .qm-changes > li::before, .qm-note {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .qm-strip, .qm-priorities, .qm-block--change, .qm-chart, .qm-table-wrap, .qm-plan-col, .qm-link, .qm-shot-link { background: #fff; }
+  .qm-section { margin-top: 28px; padding-top: 22px; }
+  .qm-strip { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .qm-toc { break-after: page; }
+  h2, h3, .qm-section-head, .qm-block-title { break-after: avoid; }
+  figure, .qm-strip, .qm-priorities > li, .qm-block--change, .qm-chart, .qm-plan-col, .qm-table tr, .qm-facts > li, .qm-changes > li, .qm-note { break-inside: avoid; }
+  .qm-table-wrap { overflow: visible; }
+  a { text-decoration: none; }
+}
+</style>
+</head>
+<body>
+<!-- Icons and the Quomerce mark, drawn once and used with <svg class="qm-i"><use href="#i-…"/></svg>. Keep as is. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="qm-logo" viewBox="0 0 589.12 461.49"><path d="M589.12,461.49h-86.67v-86.67h86.67v86.67ZM415.78,374.82l86.67,86.67v-86.67h-86.67ZM329.11,288.15l86.67,86.67v-86.67h-86.67ZM84.9,0H-1.77v86.67h86.67V0ZM502.45,86.67h-86.67v288.15h86.67V86.67ZM171.57,86.67h-86.67v288.15h86.67V86.67ZM415.78,461.49v-86.67h-244.21v86.67h244.21ZM415.78,86.67V0h-244.21v86.67h244.21Z"/></symbol>
+  <symbol id="i-recording" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.4"/><path d="M6.7 5.7v4.6L10.3 8z" fill="currentColor" stroke-width="1.2"/></symbol>
+  <symbol id="i-page" viewBox="0 0 16 16"><path d="M7 3.5H3.5v9h9V9"/><path d="M9.5 3.5h3v3M12.5 3.5 7.5 8.5"/></symbol>
+  <symbol id="i-heatmap" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.4"/><circle cx="8" cy="8" r="3.6"/><circle cx="8" cy="8" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-data" viewBox="0 0 16 16"><path d="M2.5 13.5h11M4.5 11V8.5M8 11V4.5M11.5 11V6.8"/></symbol>
+  <symbol id="i-see" viewBox="0 0 16 16"><path d="M1.6 8s2.3-4.4 6.4-4.4S14.4 8 14.4 8s-2.3 4.4-6.4 4.4S1.6 8 1.6 8z"/><circle cx="8" cy="8" r="1.9"/></symbol>
+  <symbol id="i-where" viewBox="0 0 16 16"><path d="M6.6 9.4a2.9 2.9 0 0 0 4.1 0l2-2a2.9 2.9 0 0 0-4.1-4.1l-.9.9"/><path d="M9.4 6.6a2.9 2.9 0 0 0-4.1 0l-2 2a2.9 2.9 0 0 0 4.1 4.1l.9-.9"/></symbol>
+  <symbol id="i-change" viewBox="0 0 16 16"><path d="M3 8h9.5M9 4.5 12.5 8 9 11.5"/></symbol>
+  <symbol id="i-print" viewBox="0 0 16 16"><path d="M4.5 6V2.5h7V6M4.5 11.5h-2v-5h11v5h-2"/><path d="M4.5 9.5h7v4h-7z"/></symbol>
+</svg>
+
+<main class="qm-report">
+<!-- report:start -->
+
+  <!-- ── Masthead. "Save as PDF" in the report's language (see the labels table). ── -->
+  <header class="qm-masthead">
+    <a class="qm-wordmark" href="https://www.quomerce.com" aria-label="Quomerce">
+      <svg aria-hidden="true"><use href="#qm-logo"/></svg><span>Quomerce</span>
+    </a>
+    <div class="qm-masthead-meta">
+      <span>{{Report name}} · {{Date the report was written}}</span>
+      <button class="qm-print" type="button" onclick="window.print()"><svg class="qm-i" aria-hidden="true"><use href="#i-print"/></svg>{{Save as PDF}}</button>
+    </div>
+  </header>
+
+  <!-- ── Cover: the shop, the title, the answer in one sentence, and the basis. ── -->
+  <section class="qm-cover qm-ink">
+    <svg class="qm-cover-mark" aria-hidden="true"><use href="#qm-logo"/></svg>
+    <p class="qm-kicker">{{shop host}}</p>
+    <h1>{{Report title, e.g. Navigation and layout audit}}</h1>
+    <p class="qm-lead">{{The answer in one or two sentences: where shoppers get lost most, and the one number that shows it.}}</p>
+    <dl class="qm-cover-meta">
+      <div><dt>{{Period}}</dt><dd>{{1–24 Nov 2026}}</dd></div>
+      <div><dt>{{Sessions}}</dt><dd>{{34,849}}</dd></div>
+      <div><dt>{{Orders}}</dt><dd>{{1,106}}</dd></div>
+      <div><dt>{{Prepared by}}</dt><dd>{{Name, or Quomerce}}</dd></div>
+    </dl>
+  </section>
+
+  <!-- ── Summary: the answer, three or four headline figures, the top changes in order. ── -->
+  <section class="qm-section" id="summary" style="border-top:0;margin-top:40px;padding-top:0">
+    <h2>{{Summary}}</h2>
+    <p class="qm-lead">{{Where shoppers get lost most, in two sentences, with the numbers that prove it.}}</p>
+
+    <div class="qm-strip">
+      <div class="qm-cell">
+        <p class="qm-cell-label">{{Sessions on phones}}</p>
+        <p class="qm-figure">{{77%}}</p>
+        <p class="qm-cell-hint">{{26,855 of 34,849}}</p>
+      </div>
+      <div class="qm-cell">
+        <p class="qm-cell-label">{{Conversion, phone vs computer}}</p>
+        <p class="qm-figure">{{2.52%}} <small>{{vs 3.80%}}</small></p>
+        <p class="qm-cell-hint is-down">{{A third lower on phones}}</p>
+      </div>
+      <div class="qm-cell">
+        <p class="qm-cell-label">{{Leave a category page without opening a product}}</p>
+        <p class="qm-figure">{{38%}}</p>
+        <p class="qm-cell-hint">{{of sessions that viewed a category}}</p>
+      </div>
+    </div>
+
+    <h3 class="qm-label">{{The changes with the most impact, in order}}</h3>
+    <ol class="qm-priorities">
+      <li>
+        <h3><a href="#{{section-id}}">{{The change, in shop words}}</a></h3>
+        <p>{{Why, in one sentence with one number and its base.}}</p>
+        <div class="qm-chips">
+          <span class="qm-chip" data-effort="{{quick|medium|large}}">{{Quick fix | 2–6 weeks | After the season}}</span>
+          <span class="qm-chip">{{Developer | Content | Marketing}}</span>
+        </div>
+      </li>
+      <!-- Up to five <li>, most impact first. -->
+    </ol>
+  </section>
+
+  <!-- ── Contents: one row per section that follows. ── -->
+  <nav class="qm-toc" aria-label="{{Contents}}">
+    <h2 class="qm-label">{{Contents}}</h2>
+    <ol>
+      <li><a href="#data"><span></span>{{Where the data comes from}}</a></li>
+      <li><a href="#moves"><span></span>{{How shoppers move through the shop}}</a></li>
+      <li><a href="#{{section-id}}"><span>1</span>{{Area title}}</a></li>
+      <li><a href="#plan"><span></span>{{Plan}}</a></li>
+      <li><a href="#measure"><span></span>{{How to measure the effect}}</a></li>
+      <li><a href="#limits"><span></span>{{Limits of this analysis}}</a></li>
+      <li><a href="#sources"><span></span>{{Sources}}</a></li>
+    </ol>
+  </nav>
+
+  <!-- ── Where the data comes from ── -->
+  <section class="qm-section" id="data">
+    <h2>{{Where the data comes from}}</h2>
+    <div class="qm-prose">
+      <p>{{Period, and why: e.g. 1–24 November 2026, since tracking started. Sessions with cookie consent and orders. What is not counted.}}</p>
+      <ul class="qm-list">
+        <li><strong>Quomerce:</strong> {{which reports: paths between page types, entry pages, click and scroll heatmaps of which pages, recordings, queries.}}</li>
+        <li><strong>{{The live shop}}:</strong> {{what was read and tried, on which devices.}}</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── How shoppers move: the doors (entry pages), devices, the first step after each page type. ── -->
+  <section class="qm-section" id="moves">
+    <div class="qm-section-head">
+      <h2>{{How shoppers move through the shop}}</h2>
+      <p class="qm-thesis">{{The thesis, e.g. The main doors are product and category pages, not the home page, so navigation has to work from every page.}}</p>
+    </div>
+
+    <ul class="qm-facts">
+      <li><strong>{{Devices.}}</strong> {{77% of sessions on phones (26,855), 23% on computers (7,879). Revenue per session 5.18 zł on phones, 9.24 zł on computers.}}</li>
+      <li><strong>{{Entry page.}}</strong> {{48% of sessions start on a product page, 25% on a category…}}</li>
+    </ul>
+
+    <!-- Bars: one row per share. --v is the bar's length (the share, or the value against the row with the most). -->
+    <figure class="qm-chart">
+      <figcaption class="qm-chart-title">{{Conversion by entry page type}}</figcaption>
+      <ul class="qm-bars">
+        <li style="--v:100%"><span class="qm-bar-label">{{Home page}}</span><span class="qm-bar"></span><span class="qm-bar-value">{{4.9%}}</span></li>
+        <li style="--v:55%"><span class="qm-bar-label">{{Product page}}</span><span class="qm-bar"></span><span class="qm-bar-value">{{2.7%}}</span></li>
+        <li class="is-focus" style="--v:49%"><span class="qm-bar-label">{{Category page}}</span><span class="qm-bar"></span><span class="qm-bar-value">{{2.4%}}</span></li>
+        <li class="is-muted" style="--v:22%"><span class="qm-bar-label">{{Blog and other}}</span><span class="qm-bar"></span><span class="qm-bar-value">{{1.1%}}</span></li>
+      </ul>
+      <p class="qm-chart-note">{{Quomerce, entry pages, 1–24 Nov 2026, sessions with cookie consent}}</p>
+    </figure>
+
+    <p class="qm-prose">{{Where the most is to fix, and why the next sections are in this order.}}</p>
+  </section>
+
+  <!-- ── An area. Copy this section once per area (four to seven), the one that loses most shoppers first. ── -->
+  <section class="qm-section" id="{{section-id}}">
+    <div class="qm-section-head">
+      <h2><span class="qm-num">1</span>{{Area: the problem in shop words, e.g. Search: hidden on phones, and a failed search ends on an empty page}}</h2>
+      <p class="qm-thesis">{{One or two sentences: what happens, with the number that shows it.}}</p>
+      <div class="qm-chips">
+        <!-- certain = counted in the shop's data; likely = seen in recordings; check = a lead to confirm. -->
+        <span class="qm-chip" data-certainty="{{certain|likely|check}}">{{Counted in the data | Seen in recordings | To check}}</span>
+        <span class="qm-chip">{{Who fixes it: Developer | Content | Marketing}}</span>
+        <span class="qm-chip" data-effort="{{quick|medium|large}}">{{Quick fix | 2–6 weeks | After the season}}</span>
+      </div>
+    </div>
+
+    <div class="qm-block">
+      <h3 class="qm-block-title"><svg class="qm-i" aria-hidden="true"><use href="#i-see"/></svg>{{What we see}}</h3>
+      <ul class="qm-facts">
+        <li><strong>{{Lead-in.}}</strong> {{A fact with its number and base, or what a shopper did in a recording.}}</li>
+        <li>{{Another fact.}}</li>
+      </ul>
+    </div>
+
+    <div class="qm-block">
+      <h3 class="qm-block-title"><svg class="qm-i" aria-hidden="true"><use href="#i-where"/></svg>{{Where to see it}}</h3>
+      <ul class="qm-links">
+        <li><a class="qm-link" data-kind="recording" href="{{https://app.quomerce.com/…/tracking/sessions/<id>?at=<time>}}"><svg class="qm-i" aria-hidden="true"><use href="#i-recording"/></svg>{{Recording: what it shows}}</a></li>
+        <li><a class="qm-link" data-kind="page" href="{{https://shop/page}}"><svg class="qm-i" aria-hidden="true"><use href="#i-page"/></svg>{{Page: its name}}</a></li>
+        <li><a class="qm-link" data-kind="heatmap" href="{{https://app.quomerce.com/…/tracking/heatmaps?path=/page}}"><svg class="qm-i" aria-hidden="true"><use href="#i-heatmap"/></svg>{{Heatmap: page, device}}</a></li>
+      </ul>
+    </div>
+
+    <!-- A screenshot you saved (live shop). Phone screenshots: add qm-shot--phone; two or three side by side: wrap them in <div class="qm-shots">. -->
+    <figure class="qm-shot qm-shot--phone">
+      <img src="{{images/name.png or data:image/png;base64,…}}" alt="{{What the picture shows}}">
+      <figcaption>{{What to look at in the picture, and where it comes from (live shop, phone, date).}}</figcaption>
+    </figure>
+
+    <!-- A picture you could see but not save (a Quomerce heatmap or recording screenshot): a card that opens it. -->
+    <figure class="qm-shot">
+      <a class="qm-shot-link" href="{{https://app.quomerce.com/…/tracking/heatmaps?path=/page}}">
+        <svg class="qm-i" aria-hidden="true"><use href="#i-heatmap"/></svg>
+        <span><strong>{{Heatmap of /page on phones}}</strong><span>{{Open in Quomerce}}</span></span>
+      </a>
+      <figcaption>{{What the picture shows: which elements are hottest, where the 75% and 50% lines fall.}}</figcaption>
+    </figure>
+
+    <div class="qm-block qm-block--change">
+      <h3 class="qm-block-title"><svg class="qm-i" aria-hidden="true"><use href="#i-change"/></svg>{{What to change}}</h3>
+      <ol class="qm-changes">
+        <li>{{A concrete change on this shop: what, where, for whom (phone, computer).}}</li>
+        <li>{{The next one.}}</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ── Plan: three horizons. Quick = settings and content; medium = theme or template; large = structure, addresses, after the busy season. ── -->
+  <section class="qm-section" id="plan">
+    <div class="qm-section-head">
+      <h2>{{Plan}}</h2>
+      <p class="qm-thesis">{{When to do what, e.g. quick fixes before the holidays, the menu and addresses after the season.}}</p>
+    </div>
+    <div class="qm-plan">
+      <section class="qm-plan-col">
+        <h3>{{Quick fixes}}</h3>
+        <p>{{Up to 2 weeks · settings and content}}</p>
+        <ul class="qm-checklist">
+          <li>{{Task}}</li>
+        </ul>
+      </section>
+      <section class="qm-plan-col">
+        <h3>{{Medium}}</h3>
+        <p>{{2–6 weeks · changes to the theme}}</p>
+        <ul class="qm-checklist">
+          <li>{{Task}}</li>
+        </ul>
+      </section>
+      <section class="qm-plan-col">
+        <h3>{{Larger}}</h3>
+        <p>{{After the season · structure and addresses}}</p>
+        <ul class="qm-checklist">
+          <li>{{Task}}</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <!-- ── How to measure: today's value of each figure a change should move. ── -->
+  <section class="qm-section" id="measure">
+    <div class="qm-section-head">
+      <h2>{{How to measure the effect}}</h2>
+      <p class="qm-thesis">{{Compare 2–4 weeks after each change with the values below, and what is unusual about the base period.}}</p>
+    </div>
+    <div class="qm-table-wrap">
+      <table class="qm-table">
+        <thead><tr><th>{{Figure}}</th><th class="num">{{Today}} ({{period}})</th><th>{{Change it tracks}}</th></tr></thead>
+        <tbody>
+          <tr><td>{{Session conversion on phones}}</td><td class="num">{{2.52%}}</td><td>{{all}}</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── Limits: what the data cannot say. Short and honest. ── -->
+  <section class="qm-section" id="limits">
+    <h2>{{Limits of this analysis}}</h2>
+    <ul class="qm-facts">
+      <li>{{e.g. 24 days, all in a sale period.}}</li>
+      <li>{{e.g. Only sessions with cookie consent, about half of all visits.}}</li>
+      <li>{{e.g. Correlation, not cause. Nothing here has been tested yet.}}</li>
+    </ul>
+  </section>
+
+  <!-- ── Sources: every recording, report and page the findings rest on. ── -->
+  <section class="qm-section qm-sources" id="sources">
+    <h2>{{Sources}}</h2>
+    <p class="qm-prose">{{Figures, heatmaps and screenshots come from Quomerce for <shop> (<period>). Recordings open after signing in to Quomerce.}}</p>
+    <div>
+      <h3>{{Recordings}}</h3>
+      <ul>
+        <li><a href="{{link with ?at=}}">{{What it shows}}</a><small>{{date, device, how they came in}}</small></li>
+      </ul>
+    </div>
+    <div>
+      <h3>{{Quomerce reports used}}</h3>
+      <ul>
+        <li>{{Entry pages; paths after each page type; heatmaps of …; queries: …}}</li>
+      </ul>
+    </div>
+    <div>
+      <h3>{{Shop pages}}</h3>
+      <ul>
+        <li><a href="{{https://shop/page}}">{{Page name}}</a></li>
+      </ul>
+    </div>
+    <p class="qm-note">{{How to read heatmaps: blue to red is the number of clicks; dashed lines show where 75, 50 and 25% of page views stopped scrolling. Each picture is drawn on one recorded visit, so small elements sometimes do not show.}}</p>
+  </section>
+
+  <footer class="qm-footer">
+    <a class="qm-wordmark" href="https://www.quomerce.com" aria-label="Quomerce">
+      <svg aria-hidden="true"><use href="#qm-logo"/></svg><span>Quomerce</span>
+    </a>
+    <p>{{Prepared with Quomerce from recordings of real shoppers and the live shop.}} <a href="https://www.quomerce.com">quomerce.com</a></p>
+  </footer>
+
+<!-- report:end -->
+</main>
+</body>
+</html>
